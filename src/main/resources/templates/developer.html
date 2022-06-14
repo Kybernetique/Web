@@ -33,9 +33,9 @@
                 <td th:text="${developer.id}"></td>
                 <td th:text="${developer.firstName}" style="width: 60%"></td>
                 <td th:text="${developer.lastName}" style="width: 60%"></td>
-                <td th:text="${developer.companyID}}" style="width: 60%"></td>
-                <td th:text="${developer.jobID}" style="width: 60%"></td>
-                <td th:text="${developer.projectID}" style="width: 60%"></td>
+                <td th:text="${developer.companyName} + ' ' + ${developer.companyCountry}" style="width: 60%"></td>
+                <td th:text="${developer.jobName} + ' ' + ${developer.jobHourlyRate}" style="width: 60%"></td>
+                <td th:text="${developer.projectName}" style="width: 60%"></td>
                 <td style="width: 10%">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-warning button-fixed button-sm"

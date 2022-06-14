@@ -18,18 +18,27 @@
             <input type="text" class="form-control" id="lastName" th:field="${developerDto.lastName}" required>
         </div>
         <div class="mb-3">
-            <label for="company" class="form-label">Компании</label>
+            <label for="company" class="form-label">Компания</label>
             <div class = "input-group">
-                <select class="form-control" id="company" th:field="${developerDto.companyName}">
+                <select class="form-control" id="company" th:field="${developerDto.company}">
                     <option th:each = "company, iterator: ${companies}" th:value="${company.id}"
                             th:text="${company.name} + ' ' + ${company.country}"></option>
                 </select>
             </div>
         </div>
         <div class="mb-3">
+            <label for="job" class="form-label">Должность</label>
+            <div class = "input-group">
+                <select class="form-control" id="job" th:field="${developerDto.job}">
+                    <option th:each = "job, iterator: ${jobs}" th:value="${job.id}"
+                            th:text="${job.name} + ' ' +${job.hourlyRate}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3">
             <label for="project" class="form-label">Проект</label>
             <div class = "input-group">
-                <select class="form-control" id="project" th:field="${developerDto.projectName}">
+                <select class="form-control" id="project" th:field="${developerDto.project}">
                     <option th:each = "project, iterator: ${projects}" th:value="${project.id}"
                             th:text="${project.name}"></option>
                 </select>

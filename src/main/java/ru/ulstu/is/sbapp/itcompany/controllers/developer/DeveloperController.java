@@ -30,12 +30,14 @@ public class DeveloperController {
 
     @PostMapping("/")
     public DeveloperDTO createDeveloper(@RequestBody @Valid DeveloperDTO developerDto) {
-        return new DeveloperDTO(developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getProject()));
+        return new DeveloperDTO(developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(),
+                developerDto.getCompany(), developerDto.getJob(),developerDto.getProject()));
     }
 
     @PatchMapping("/{id}")
     public DeveloperDTO updateDeveloper(@PathVariable Long id, @RequestBody @Valid DeveloperDTO developerDTO) {
-        return new DeveloperDTO(developerService.updateDeveloper(id, developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompany(), developerDTO.getProject()));
+        return new DeveloperDTO(developerService.updateDeveloper(id, developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompany(), developerDTO.getJob(),
+                developerDTO.getProject()));
     }
 
     @DeleteMapping("/{id}")

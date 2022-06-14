@@ -12,13 +12,15 @@ public class DeveloperDTO {
     private String lastName;
     private long company;
     private long project;
+    private long job;
     private String companyName;
     private String companyCountry;
     private String projectName;
     private String jobName;
     private Double jobHourlyRate;
 
-    public DeveloperDTO() { }
+    public DeveloperDTO() {
+    }
 
     public DeveloperDTO(Developer developer) {
         this.id = developer.getId();
@@ -33,26 +35,57 @@ public class DeveloperDTO {
             project = developer.getProject().getId();
             projectName = developer.getProject().getName();
         }
+        if (developer.getJob() != null) {
+            job = developer.getJob().getID();
+            jobName = developer.getJob().getName();
+            jobHourlyRate = developer.getJob().getHourlyRate();
+        }
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public long getId() { return id; }
+    public long getId() {
+        return id;
+    }
 
-    public String getFirstName() { return firstName; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public String getLastName() { return lastName; }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public long getProject(){ return project; }
+    public long getProject() {
+        return project;
+    }
 
-    public long getCompany() { return company; }
+    public long getCompany() {
+        return company;
+    }
 
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public long getJob() {
+        return job;
+    }
 
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public void setProject(long project){ this.project = project; }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public void setCompany(long company) { this.company = company; }
+    public void setProject(long project) {
+        this.project = project;
+    }
+
+    public void setCompany(long company) {
+        this.company = company;
+    }
+
+    public void setJob(long job) {
+        this.job = job;
+    }
 
     public String getCompanyName() {
         return companyName;
@@ -65,4 +98,13 @@ public class DeveloperDTO {
     public String getProjectName() {
         return projectName;
     }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public Double getJobHourlyRate() {
+        return jobHourlyRate;
+    }
+
 }

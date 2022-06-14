@@ -36,7 +36,7 @@ public class ProjectMVC {
         else {
             model.addAttribute("projectId", id);
             model.addAttribute("projectDto", new ProjectDTO(projectService.findProject(id)));
-            model.addAttribute("developeres", projectService.findProject(id).getDevelopers());
+            model.addAttribute("developers", projectService.findProject(id).getDevelopers());
         }
         return "project-edit";
     }

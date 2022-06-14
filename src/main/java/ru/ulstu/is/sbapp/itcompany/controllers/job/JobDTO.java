@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.ulstu.is.sbapp.itcompany.models.Job;
 
 import javax.validation.constraints.NotBlank;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JobDTO {
     private Long id;
@@ -13,6 +15,9 @@ public class JobDTO {
 
     private Double hourlyRate;
 
+    private Map<Long, String> developers;
+
+
     public JobDTO() {
     }
 
@@ -20,6 +25,12 @@ public class JobDTO {
         this.id = job.getID();
         this.name = job.getName();
         this.hourlyRate = job.getHourlyRate();
+        developers = new HashMap<>();
+        if (job.getDevelopers() != null) {
+            for (var dev : job.getDevelopers()) {
+                developers.put(dev.getId(), dev.getLastName());
+            }
+        }
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

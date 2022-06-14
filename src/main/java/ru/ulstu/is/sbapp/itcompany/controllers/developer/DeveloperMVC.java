@@ -5,9 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.ulstu.is.sbapp.itcompany.controllers.company.CompanyDTO;
+import ru.ulstu.is.sbapp.itcompany.controllers.job.JobDTO;
 import ru.ulstu.is.sbapp.itcompany.controllers.project.ProjectDTO;
 import ru.ulstu.is.sbapp.itcompany.services.CompanyService;
 import ru.ulstu.is.sbapp.itcompany.services.DeveloperService;
+import ru.ulstu.is.sbapp.itcompany.services.JobService;
 import ru.ulstu.is.sbapp.itcompany.services.ProjectService;
 
 import javax.validation.Valid;
@@ -18,11 +20,14 @@ public class DeveloperMVC {
     private final DeveloperService developerService;
     private final CompanyService companyService;
     private final ProjectService projectService;
+    private final JobService jobService;
 
-    public DeveloperMVC(DeveloperService developerService, CompanyService companyService, ProjectService projectService) {
+    public DeveloperMVC(DeveloperService developerService, CompanyService companyService,
+                        ProjectService projectService, JobService jobService) {
         this.developerService = developerService;
         this.companyService = companyService;
         this.projectService = projectService;
+        this.jobService = jobService;
     }
 
     @GetMapping
@@ -44,6 +49,7 @@ public class DeveloperMVC {
             model.addAttribute("developerDto", new DeveloperDTO(developerService.findDeveloper(id)));
         }
         model.addAttribute("companies", companyService.findAllCompanies().stream().map(CompanyDTO::new).toList());
+        model.addAttribute("jobs", jobService.findAllJobs().stream().map(JobDTO::new).toList());
         model.addAttribute("projects", projectService.findAllProjects().stream().map(ProjectDTO::new).toList());
         return "developer-edit";
     }
@@ -58,9 +64,9 @@ public class DeveloperMVC {
             return "developer-edit";
         }
         if (id == null || id <= 0) {
-            developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getProject());
+            developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getProject());
         } else {
-            developerService.updateDeveloper(id, developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getProject());
+            developerService.updateDeveloper(id, developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getProject());
         }
         return "redirect:/developer";
     }

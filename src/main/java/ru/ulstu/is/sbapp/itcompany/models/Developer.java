@@ -54,6 +54,8 @@ public class Developer {
 
     public Project getProject(){ return project; }
 
+    public Job getJob() {return job;}
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -72,6 +74,13 @@ public class Developer {
         this.project = project;
         if(!project.getDevelopers().contains(this)){
             project.setDeveloper(this);
+        }
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+        if (!job.getDevelopers().contains(this)) {
+            job.setDeveloper(this);
         }
     }
 

@@ -16,25 +16,29 @@ public class DeveloperService {
     private final DeveloperRepository developerRepository;
     private final ValidatorUtil validatorUtil;
     private final CompanyService companyService;
+    private final JobService jobService;
     private final ProjectService projectService;
 
     public DeveloperService(DeveloperRepository developerRepository, ValidatorUtil validatorUtil, CompanyService companyService,
-                      ProjectService projectService) {
+                      JobService jobService, ProjectService projectService) {
         this.developerRepository = developerRepository;
         this.validatorUtil = validatorUtil;
         this.projectService = projectService;
+        this.jobService = jobService;
         this.companyService = companyService;
     }
 
     @Transactional
-    public Developer addDeveloper(String firstName, String lastName, long companyId, long projectId) {
+    public Developer addDeveloper(String firstName, String lastName, long companyId, long jobId,long projectId) {
         if(!StringUtils.hasText(firstName) || companyId == 0 || projectId == 0) {
             throw new IllegalArgumentException("Developer's data is null or empty");
         }
         var company = companyService.findCompany(companyId);
+        var job = jobService.findJob(jobId);
         var project = projectService.findProject(projectId);
         var developer = new Developer(firstName, lastName);
         developer.setCompany(company);
+        developer.setJob(job);
         developer.setProject(project);
         validatorUtil.validate(developer);
         return developerRepository.save(developer);
@@ -42,7 +46,8 @@ public class DeveloperService {
 
     @Transactional
     public DeveloperDTO addDeveloper(DeveloperDTO developerDTO) {
-        return new DeveloperDTO(addDeveloper(developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompany(), developerDTO.getProject()));
+        return new DeveloperDTO(addDeveloper(developerDTO.getFirstName(), developerDTO.getLastName(),
+                developerDTO.getCompany(), developerDTO.getJob(), developerDTO.getProject()));
     }
 
 
@@ -58,14 +63,15 @@ public class DeveloperService {
     }
 
     @Transactional
-    public Developer updateDeveloper(Long id, String firstName, String lastName, Long companyId
-            , Long projectId) {
+    public Developer updateDeveloper(Long id, String firstName, String lastName, Long companyId,
+                                     Long jobId, Long projectId) {
         if(!StringUtils.hasText(firstName)) {
             throw new IllegalArgumentException("Developer's data is null or empty");
         }
         final Developer currentDeveloper = findDeveloper(id);
         var company = companyService.findCompany(companyId);
-        var sto = projectService.findProject(projectId);
+        var job = jobService.findJob(jobId);
+        var project = projectService.findProject(projectId);
         currentDeveloper.setFirstName(firstName);
         currentDeveloper.setLastName(lastName);
         if (currentDeveloper.getCompany().getId().equals(companyId)) {
@@ -81,7 +87,15 @@ public class DeveloperService {
         }
         else {
             currentDeveloper.getProject().removeDeveloper(id);
-            currentDeveloper.setProject(sto);
+            currentDeveloper.setProject(project);
+        }
+
+        if (currentDeveloper.getJob().getID().equals(jobId)) {
+            currentDeveloper.getJob().updateDeveloper(id, currentDeveloper);
+        }
+        else {
+            currentDeveloper.getJob().removeDeveloper(id);
+            currentDeveloper.setJob(job);
         }
         validatorUtil.validate(currentDeveloper);
         return developerRepository.save(currentDeveloper);
@@ -90,7 +104,7 @@ public class DeveloperService {
     @Transactional
     public DeveloperDTO updateDeveloper(DeveloperDTO developerDto) {
         return new DeveloperDTO(updateDeveloper(developerDto.getId(), developerDto.getFirstName(),
-                developerDto.getLastName(), developerDto.getCompany(), developerDto.getProject()));
+                developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getProject()));
     }
 
     @Transactional
