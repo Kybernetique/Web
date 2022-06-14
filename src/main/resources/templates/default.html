@@ -30,16 +30,12 @@
                    th:classappend="${#strings.equals(activeLink, '/')} ? 'active' : ''">Главная</a>
                 <a class="nav-link" href="/company"
                    th:classappend="${#strings.equals(activeLink, '/company')} ? 'active' : ''">Компании</a>
+                <a class="nav-link" href="/developer"
+                   th:classappend="${#strings.equals(activeLink, '/developer')} ? 'active' : ''">Разработчики</a>
                 <a class="nav-link" href="/job"
                    th:classappend="${#strings.equals(activeLink, '/job')} ? 'active' : ''">Должности</a>
                 <a class="nav-link" href="/project"
                    th:classappend="${#strings.equals(activeLink, '/project')} ? 'active' : ''">Проекты</a>
-                <a class="nav-link" href="/speaker"
-                   th:classappend="${#strings.equals(activeLink, '/speaker')} ? 'active' : ''">Пример Speaker</a>
-                <a class="nav-link" href="/test"
-                   th:classappend="${#strings.equals(activeLink, '/test')} ? 'active' : ''">Пример Test</a>
-                <a class="nav-link" href="/student"
-                   th:classappend="${#strings.equals(activeLink, '/student')} ? 'active' : ''">Пример Student</a>
                 <a class="nav-link" href="/rest-test"
                    th:classappend="${#strings.equals(activeLink, '/rest-test')} ? 'active' : ''">Пример запроса к REST
                     API</a>

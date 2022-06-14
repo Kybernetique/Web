@@ -7,7 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import ru.ulstu.is.sbapp.student.service.StudentNotFoundException;
+import ru.ulstu.is.sbapp.itcompany.services.DeveloperNotFoundException;
 import ru.ulstu.is.sbapp.util.validation.ValidationException;
 
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice(annotations = RestController.class)
 public class AdviceController {
     @ExceptionHandler({
-            StudentNotFoundException.class,
+            DeveloperNotFoundException.class,
             ValidationException.class
     })
     public ResponseEntity<Object> handleException(Throwable e) {

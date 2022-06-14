@@ -72,7 +72,7 @@ public class Company {
 
     public Developer removeDeveloper(Long developerId) {
         for (var dev : developers) {
-            if (Objects.equals(dev.getID(), developerId)){
+            if (Objects.equals(dev.getId(), developerId)){
                 developers.remove(dev);
                 return dev;
             }
@@ -86,7 +86,7 @@ public class Company {
 
     public void updateDeveloper(Long id, Developer d) {
         for (var dev : developers) {
-            if(Objects.equals(dev.getID(), d.getID())) {
+            if(Objects.equals(dev.getId(), d.getId())) {
                 dev = d;
                 return;
             }

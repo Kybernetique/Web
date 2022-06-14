@@ -20,7 +20,7 @@ public class CompanyDTO {
         developers = new HashMap<>();
         if (company.getDevelopers() != null) {
             for (var dev : company.getDevelopers()) {
-                developers.put(dev.getID(), dev.getLastName());
+                developers.put(dev.getId(), dev.getLastName());
             }
         }
     }

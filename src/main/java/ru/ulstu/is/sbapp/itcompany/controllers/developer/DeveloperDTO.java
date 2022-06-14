@@ -1,57 +1,68 @@
 package ru.ulstu.is.sbapp.itcompany.controllers.developer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ru.ulstu.is.sbapp.itcompany.models.Developer;
 
 import javax.validation.constraints.NotBlank;
 
 public class DeveloperDTO {
-    private Long id;
-    @NotBlank(message = "Developer's first name can't be null or empty")
+    private long id;
+    @NotBlank(message = "Model can't be null or empty")
     private String firstName;
-    @NotBlank(message = "Developer's last name can't be null or empty")
     private String lastName;
-    private Long companyID;
-    private Long jobID;
-    private Long projectID;
+    private long company;
+    private long project;
+    private String companyName;
+    private String companyCountry;
+    private String projectName;
+    private String jobName;
+    private Double jobHourlyRate;
+
+    public DeveloperDTO() { }
 
     public DeveloperDTO(Developer developer) {
-        this.id = developer.getID();
+        this.id = developer.getId();
         this.firstName = developer.getFirstName();
         this.lastName = developer.getLastName();
-        this.companyID = developer.getCompany().getId();
-        this.jobID = developer.getJob().getID();
-        this.projectID = developer.getProject().getId();
-    }
-
-    public DeveloperDTO() {
+        if (developer.getCompany() != null) {
+            company = developer.getCompany().getId();
+            companyName = developer.getCompany().getName();
+            companyCountry = developer.getCompany().getCountry();
+        }
+        if (developer.getProject() != null) {
+            project = developer.getProject().getId();
+            projectName = developer.getProject().getName();
+        }
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public long getID() {
-        return id;
+    public long getId() { return id; }
+
+    public String getFirstName() { return firstName; }
+
+    public String getLastName() { return lastName; }
+
+    public long getProject(){ return project; }
+
+    public long getCompany() { return company; }
+
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public void setProject(long project){ this.project = project; }
+
+    public void setCompany(long company) { this.company = company; }
+
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getCompanyCountry() {
+        return companyCountry;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getProjectName() {
+        return projectName;
     }
-
-    public Long getCompanyID() {
-        return companyID;
-    }
-
-    public Long getJobID() {
-        return jobID;
-    }
-
-    public Long getProjectID() {
-        return projectID;
-    }
-
-
 }

@@ -1,127 +1,100 @@
 package ru.ulstu.is.sbapp.itcompany.models;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import ru.ulstu.is.sbapp.itcompany.models.Company;
+import ru.ulstu.is.sbapp.itcompany.models.Project;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
-@Table(name = "developer")
 public class Developer {
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @SequenceGenerator(name = "developer_seq",
+            sequenceName = "developer_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "developer_seq")
     private Long id;
-
-    @Column(name = "first_name")
+    @NotBlank (message="Developer's first name can't be null or empty")
     private String firstName;
-
-    @Column(name = "last_name")
+    @NotBlank (message="Developer's last name can't be null or empty")
     private String lastName;
+
+    @ManyToOne()
+    @JoinColumn(name = "company_fk")
+    private Company company;
+
+    @ManyToOne()
+    @JoinColumn(name = "project_fk")
+    private Project project;
 
     @ManyToOne
     @JoinColumn(name = "job_fk")
     private Job job;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "company_fk")
-    private Company company;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_fk")
-    private Project project;
-
-    public Developer() {
+    public Developer(){
     }
 
-    public Developer(String firstName, String lastName) {
+    public Developer(String firstName, String lastName){
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Developer(String firstName, String lastName, Job job, Company company, Project project) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.job = job;
-        this.company = company;
-        this.project = project;
-    }
-
-    public Long getID() {
+    public Long getId() {
         return id;
     }
-
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-
     public String getLastName() {
         return lastName;
+    }
+
+    public Company getCompany(){ return company; }
+
+    public Project getProject(){ return project; }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
+    public void setCompany(Company company){
         this.company = company;
+        if(!company.getDevelopers().contains(this)){
+            company.setDeveloper(this);
+        }
     }
-
-
-    public Job getJob() {
-        return job;
-    }
-
-    public void setJob(Job job) {
-        if (this.job == null) {
-            this.job = job;
+    public void setProject(Project project){
+        this.project = project;
+        if(!project.getDevelopers().contains(this)){
+            project.setDeveloper(this);
         }
     }
 
-
     public void removeCompany() {
-        if (company.removeDeveloper(getID()) != null) {
-            company.removeDeveloper(getID());
+        if(company.removeDeveloper(getId()) != null)
+        {
+            company.removeDeveloper(getId());
         }
         company = null;
     }
 
     public void removeProject() {
-        if (project.removeDeveloper(getID()) != null) {
-            project.removeDeveloper(getID());
+        if(project.removeDeveloper(getId()) != null)
+        {
+            project.removeDeveloper(getId());
         }
         project = null;
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Developer developer = (Developer) o;
         return Objects.equals(id, developer.id);
     }
@@ -131,8 +104,7 @@ public class Developer {
         return Objects.hash(id);
     }
 
-    @Override
     public String toString() {
-        return "Разработчик: "+ firstName + " " + lastName;
+        return firstName + " " + lastName;
     }
 }

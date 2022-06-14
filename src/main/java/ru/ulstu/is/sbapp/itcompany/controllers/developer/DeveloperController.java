@@ -22,19 +22,20 @@ public class DeveloperController {
     }
 
     @GetMapping("/")
-    public List<DeveloperDTO> getDevelopers() {
-        return developerService.findAllDevelopers().stream().map(DeveloperDTO::new).toList();
+    public List<DeveloperDTO> getDeveloperes() {
+        return developerService.findAllDevelopers().stream()
+                .map(DeveloperDTO::new)
+                .toList();
     }
 
-    @PostMapping
-    public DeveloperDTO createDeveloper(@RequestBody @Valid DeveloperDTO developerDTO) {
-        return new DeveloperDTO(developerService.addDeveloper(developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompanyID(), developerDTO.getJobID(), developerDTO.getProjectID()));
+    @PostMapping("/")
+    public DeveloperDTO createDeveloper(@RequestBody @Valid DeveloperDTO developerDto) {
+        return new DeveloperDTO(developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getProject()));
     }
 
-
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public DeveloperDTO updateDeveloper(@PathVariable Long id, @RequestBody @Valid DeveloperDTO developerDTO) {
-        return new DeveloperDTO(developerService.updateDeveloper(id, developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompanyID(), developerDTO.getJobID(), developerDTO.getProjectID()));
+        return new DeveloperDTO(developerService.updateDeveloper(id, developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompany(), developerDTO.getProject()));
     }
 
     @DeleteMapping("/{id}")

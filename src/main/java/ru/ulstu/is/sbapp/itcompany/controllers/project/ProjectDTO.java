@@ -18,7 +18,7 @@ public class ProjectDTO {
         developers = new HashMap<>();
         if (project.getDevelopers() != null) {
             for (var developer : project.getDevelopers()) {
-                developers.put(developer.getID(), developer.getLastName());
+                developers.put(developer.getId(), developer.getLastName());
             }
         }
     }
