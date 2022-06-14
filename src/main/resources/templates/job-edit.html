@@ -17,6 +17,22 @@
             <label for="hourlyRate" class="form-label">Почасовая ставка</label>
             <input type="text" class="form-control" id="hourlyRate" th:field="${jobDto.hourlyRate}" required>
         </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Фамилия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="developer, iterator: ${developers}">
+                    <td th:text="${developer.id}" style="width: 60%"></td>
+                    <td th:text="${developer.lastName}" style="width: 60%"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary button-fixed">
                 <span th:if="${id == null}">Добавить</span>

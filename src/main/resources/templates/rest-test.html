@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{default}">
+      layout:decorate="~{default}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <script type="text/javascript" src="/webjars/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -14,9 +15,10 @@
                 <th scope="col">#</th>
                 <th scope="col">ID</th>
                 <th scope="col">Имя</th>
+                <th scope="col">Фамилия</th>
             </tr>
             </thead>
-            <tbody id="students">
+            <tbody id="developers">
             </tbody>
         </table>
     </div>
@@ -26,7 +28,7 @@
     <script>
         $(document).ready(function () {
             $.ajax({
-                url: "http://localhost:8080/api/student/"
+                url: "http://localhost:8080/api/developer/"
             }).then(function (data) {
                 $.each(data, function (index, value) {
                     const row = $("<tr>");
@@ -34,11 +36,13 @@
                         .attr("scope", "row")
                         .text(index + 1);
                     const id = $("<td>").text(value.id);
-                    const name = $("<td>").text(value.firstName + ' ' + value.lastName);
+                    const firstName = $("<td>").text(value.firstName);
+                    const lastName = $("<td>").text(value.lastName);
                     row.append(number);
                     row.append(id);
-                    row.append(name);
-                    $("#students").append(row);
+                    row.append(firstName);
+                    row.append(lastName);
+                    $("#developers").append(row);
                 });
             });
         });
