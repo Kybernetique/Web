@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{default}" xmlns:th="http://www.thymeleaf.org">
+      layout:decorate="~{default}"
+      xmlns:th="http://www.thymeleaf.org">>
 <head>
+    <title>СТО</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -19,16 +21,14 @@
                 <th scope="col">#</th>
                 <th scope="col">ID</th>
                 <th scope="col">Название</th>
-                <th scope="col">Сложность</th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="project, iterator: ${projects}">
-                <th scope="row" th:text="${iterator.index} + 1"/>
-                <td th:text="${project.id}"/>
-                <td th:text="${project.name}" style="width: 60%"/>
-                <td th:text="${project.difficulty}">
+                <th scope="row" th:text="${iterator.index} + 1"></th>
+                <td th:text="${project.id}"></td>
+                <td th:text="${project.Name}" style="width: 60%"></td>
                 <td style="width: 10%">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-warning button-fixed button-sm"

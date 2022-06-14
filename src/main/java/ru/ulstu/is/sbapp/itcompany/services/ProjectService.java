@@ -8,41 +8,37 @@ import org.springframework.util.StringUtils;
 import ru.ulstu.is.sbapp.itcompany.controllers.project.ProjectDTO;
 import ru.ulstu.is.sbapp.itcompany.models.Project;
 import ru.ulstu.is.sbapp.itcompany.repositories.ProjectRepository;
+import ru.ulstu.is.sbapp.itcompany.services.InProjectFoundDevelopersException;
+import ru.ulstu.is.sbapp.itcompany.services.ProjectNotFoundException;
 import ru.ulstu.is.sbapp.util.validation.ValidatorUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProjectService {
-    @PersistenceContext
-    private EntityManager em;
-    private final Logger log = LoggerFactory.getLogger(CompanyService.class);
+    private final Logger log = LoggerFactory.getLogger(ProjectService.class);
     private final ProjectRepository projectRepository;
     private final ValidatorUtil validatorUtil;
 
-    public ProjectService(ProjectRepository projectRepository,
-                          ValidatorUtil validatorUtil) {
+    public ProjectService(ProjectRepository projectRepository, ValidatorUtil validatorUtil) {
         this.projectRepository = projectRepository;
         this.validatorUtil = validatorUtil;
     }
 
     @Transactional
-    public Project addProject(String projectName, String projectDifficulty) {
-        if (!StringUtils.hasText(projectName) || !StringUtils.hasText(projectDifficulty)) {
-            throw new IllegalArgumentException("Project data is empty");
+    public Project addProject(String name) {
+        if(!StringUtils.hasText(name)) {
+            throw new IllegalArgumentException("Project name is null or empty");
         }
-        final Project project = new Project(projectName, projectDifficulty);
+        final Project project = new Project(name);
         validatorUtil.validate(project);
         return projectRepository.save(project);
     }
 
     @Transactional
     public ProjectDTO addProject(ProjectDTO projectDTO) {
-        return new ProjectDTO(addProject(projectDTO.getName(), projectDTO.getDifficulty()));
+        return new ProjectDTO(addProject(projectDTO.getName()));
     }
 
     @Transactional(readOnly = true)
@@ -52,35 +48,24 @@ public class ProjectService {
     }
 
     @Transactional(readOnly = true)
-    public Project findProjectByName(String name) {
-        List<Project> projects = projectRepository.findAll();
-        for (Project project : projects) {
-            if (project.getName().equals(name))
-                return project;
-        }
-        throw new EntityNotFoundException(String.format("Project with name [%s] is not found", name));
-    }
-
-    @Transactional(readOnly = true)
     public List<Project> findAllProjects() {
         return projectRepository.findAll();
     }
 
     @Transactional
-    public Project updateProject(Long id, String projectName, String projectDifficulty) {
-        if (!StringUtils.hasText(projectName) || !StringUtils.hasText(projectDifficulty)) {
+    public Project updateProject(Long id, String name) {
+        if (!StringUtils.hasText(name)) {
             throw new IllegalArgumentException("Project name is null or empty");
         }
         final Project currentProject = findProject(id);
-        currentProject.setName(projectName);
+        currentProject.setName(name);
         validatorUtil.validate(currentProject);
         return projectRepository.save(currentProject);
     }
 
     @Transactional
     public ProjectDTO updateProject(ProjectDTO projectDTO) {
-        return new ProjectDTO(updateProject(projectDTO.getProjectID(), projectDTO.getName(),
-                projectDTO.getDifficulty()));
+        return new ProjectDTO(updateProject(projectDTO.getId(), projectDTO.getName()));
     }
 
     @Transactional
@@ -91,25 +76,13 @@ public class ProjectService {
     }
 
     @Transactional
-    public void deleteAllProjectsUnsafe() {
-        log.warn("Unsafe usage!");
-        List<Project> projects = findAllProjects();
-        for (Project project : projects) {
-            if (project.getDevelopers().size() > 0)
-                project.removeAllDevelopers();
-        }
-        projectRepository.deleteAll();
-    }
-
-    @Transactional
     public void deleteAllProjects() throws InProjectFoundDevelopersException {
-        List<Project> projects = findAllProjects();
-        for (Project project : projects) {
-            if (project.getDevelopers().size() > 0)
-                throw new InProjectFoundDevelopersException("в проекте" + project.getName() + "есть разработчики");
+        var projects = findAllProjects();
+        for (var project : projects) {
+            if (project.getDevelopers().size() > 0) {
+                throw new InProjectFoundDevelopersException("В проекте " + project.getName() + " есть разработчики");
+            }
         }
         projectRepository.deleteAll();
     }
-
-
 }

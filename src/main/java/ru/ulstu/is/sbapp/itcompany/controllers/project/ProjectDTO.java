@@ -3,40 +3,32 @@ package ru.ulstu.is.sbapp.itcompany.controllers.project;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.ulstu.is.sbapp.itcompany.models.Project;
 
+import java.util.*;
+
 public class ProjectDTO {
-    private Long projectID;
-
+    private long id;
     private String name;
+    private Map<Long, String> developers;
 
-    private String difficulty;
+    public ProjectDTO() {}
 
-    private String developers = "";
-
-    public ProjectDTO() {
-    }
-
-    public ProjectDTO(Project project) {
-        this.projectID = project.getId();
+    public ProjectDTO(Project project){
+        this.id = project.getId();
         this.name = project.getName();
-        this.difficulty = project.getDifficulty();
-        if (project.getDevelopers() != null)
-            this.developers = project.getDevelopers().toString();
+        developers = new HashMap<>();
+        if (project.getDevelopers() != null) {
+            for (var developer : project.getDevelopers()) {
+                developers.put(developer.getID(), developer.getLastName());
+            }
+        }
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public Long getProjectID() {
-        return projectID;
-    }
+    public long getId() { return id; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public String getDifficulty() {
-        return difficulty;
-    }
+    public Map<Long, String> getDevelopers() { return developers; }
 
-    public String getDevelopers() {
-        return developers;
-    }
+    public void setName(String name) { this.name = name; }
 }

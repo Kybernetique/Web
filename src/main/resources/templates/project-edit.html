@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{default}" xmlns:th="http://www.thymeleaf.org">
+      layout:decorate="~{default}" xmlns:th="http://www.thymeleaf.org">>
+>
 <head>
+    <title>Проект</title>
 </head>
 <body>
 <div layout:fragment="content">
     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
-    <form action="#" th:action="@{/project/{id}(id=${id})}" th:object="${projectDTO}" method="post">
+    <form action="#" th:action="@{/project/{id}(id=${id})}" th:object="${projectDto}" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">Название</label>
-            <input type="text" class="form-control" id="name" th:field="${projectDTO.name}" required="true">
+            <input type="text" class="form-control" id="name" th:field="${projectDto.name}" required>
         </div>
-        <div class="mb-3">
-            <label for="difficulty" class="form-label">Сложность</label>
-            <input type="text" class="form-control" id="difficulty" th:field="${projectDTO.difficulty}" required="true">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Фамилия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="developer, iterator: ${developers}">
+                    <td th:text="${developer.id}" style="width: 60%"></td>
+                    <td th:text="${developer.lastName}" style="width: 60%"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary button-fixed">
@@ -26,25 +40,6 @@
             </a>
         </div>
     </form>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">ID</th>
-            <th scope="col">Название</th>
-            <th scope="col">Сложность</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="project, iterator: ${projects}">
-            <th scope="row" th:text="${iterator.index} + 1"/>
-            <td th:text="${project.id}"/>
-            <td th:text="${project.name} + ' ' + ${project.difficulty}" style="width: 60%"/>
-            <td th:text="${project.developers}">
-        </tr>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>

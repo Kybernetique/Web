@@ -10,12 +10,12 @@
     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
     <form action="#" th:action="@{/job/{id}(id=${id})}" th:object="${jobDto}" method="post">
         <div class="mb-3">
-            <label for="model" class="form-label">Название</label>
-            <input type="text" class="form-control" id="model" th:field="${jobDto.name}" required>
+            <label for="name" class="form-label">Название</label>
+            <input type="text" class="form-control" id="name" th:field="${jobDto.name}" required>
         </div>
         <div class="mb-3">
-            <label for="price" class="form-label">Почасовая ставка</label>
-            <input type="text" class="form-control" id="price" th:field="${jobDto.hourlyRate}" required>
+            <label for="hourlyRate" class="form-label">Почасовая ставка</label>
+            <input type="text" class="form-control" id="hourlyRate" th:field="${jobDto.hourlyRate}" required>
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary button-fixed">

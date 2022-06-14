@@ -1,26 +1,27 @@
 package ru.ulstu.is.sbapp.itcompany.models;
 
+import ru.ulstu.is.sbapp.itcompany.models.Developer;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+//один ко многим с Car
+//в одном СТО много автомобилей
 @Entity
-@Table(name = "project")
 public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @SequenceGenerator(name = "project_seq",
+            sequenceName = "project_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
     private Long id;
-
-    @Column(name = "name")
+    @NotBlank(message="Project name can't be null or empty")
     private String name;
 
-    @Column(name = "Difficulty")
-    private String difficulty;
-
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Developer> developers;
-
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_fk")
+    private List<Developer> developers = new ArrayList<>();
 
     public Project() {
     }
@@ -29,83 +30,67 @@ public class Project {
         this.name = name;
     }
 
-    public Project(String name, String difficulty) {
+    public Project(String name, List<Developer> developers){
         this.name = name;
-        this.difficulty = difficulty;
+        this.developers = developers;
     }
 
     public Long getId() {
         return id;
     }
 
-
     public String getName() {
         return name;
+    }
+
+    public List<Developer> getDevelopers(){
+        return developers;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
-
-
-    public List<Developer> getDevelopers() {
-        return developers;
-    }
-
-
-    public void setDeveloper(Developer developer) {
-        developers.add(developer);
-/*        if (!developers.contains(developer)) {
+    public void setDeveloper(Developer developer){
+        if(!developers.contains(developer))
+        {
             developers.add(developer);
-            if (developer.getProject() != this) {
+            if(developer.getProject() != this)
+            {
                 developer.setProject(this);
             }
-        }*/
+        }
     }
 
-    public Developer removeDeveloper(Long developerID) {
-        for (var developer : developers) {
-            if (Objects.equals(developer.getID(), developerID)) {
-                developers.remove(developer);
-                return developer;
+    public Developer removeDeveloper(Long developerId) {
+        for (var dev : developers) {
+            if (Objects.equals(dev.getID(), developerId)){
+                developers.remove(dev);
+                return dev;
             }
         }
         return null;
+    }
+
+    public void updateDeveloper(Long id, Developer d) {
+        for (var dev : developers) {
+            if(Objects.equals(dev.getID(), d.getID())) {
+                dev = d;
+                return;
+            }
+        }
     }
 
     public void removeAllDevelopers() {
         developers.clear();
     }
 
-    public void updateDeveloper(Long id, Developer dev) {
-        for (var developer : developers) {
-            if (Objects.equals(developer.getID(), dev.getID())) {
-                developer = dev;
-                return;
-            }
-        }
-    }
-
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Project Project = (Project) o;
-        return Objects.equals(id, Project.id);
+    public boolean equals(Object p) {
+        if (this == p) return true;
+        if (p == null || getClass() != p.getClass()) return false;
+        Project project = (Project) p;
+        return Objects.equals(id, project.id);
     }
 
     @Override
@@ -113,14 +98,6 @@ public class Project {
         return Objects.hash(id);
     }
 
-    /*    @Override
-        public String toString() {
-            return "Проект:\n" +
-                    "    id = " + id + "\n" +
-                    "    Название = " + name + "\n" +
-                    "    Сложность = " + difficulty + "\n";
-        }*/
-    @Override
     public String toString() {
         return name;
     }

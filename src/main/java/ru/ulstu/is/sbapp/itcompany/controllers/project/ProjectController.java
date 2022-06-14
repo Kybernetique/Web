@@ -16,36 +16,30 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @PostMapping("/")
-    public ProjectDTO createProject(@RequestBody @Valid ProjectDTO projectDTO) {
-        return new ProjectDTO(projectService.addProject(projectDTO.getName(),
-                projectDTO.getDifficulty()));
-    }
-
-    @PutMapping("/{id}")
-    public ProjectDTO updateProject(@PathVariable Long id,
-                                    @RequestBody @Valid ProjectDTO projectDTO) {
-        return new ProjectDTO(projectService.updateProject(id,
-                projectDTO.getName(), projectDTO.getDifficulty()));    }
-
     @GetMapping("/{id}")
-    public ProjectDTO getProject(@PathVariable Long id) {
+    public ProjectDTO getProject(@PathVariable Long id){
         return new ProjectDTO(projectService.findProject(id));
     }
 
-
     @GetMapping("/")
-    public List<ProjectDTO> getProjects() {
+    public List<ProjectDTO> getProjects(){
         return projectService.findAllProjects().stream()
                 .map(ProjectDTO::new)
                 .toList();
     }
 
+    @PostMapping("/")
+    public ProjectDTO createProject(@RequestParam("name") String name) {
+        return new ProjectDTO(projectService.addProject(name));
+    }
+
+    @PatchMapping("/{id}")
+    public ProjectDTO updateProject(@PathVariable Long id, @RequestBody @Valid ProjectDTO projectDTO){
+        return new ProjectDTO(projectService.updateProject(id, projectDTO.getName()));
+    }
 
     @DeleteMapping("/{id}")
     public ProjectDTO deleteProject(@PathVariable Long id) {
         return new ProjectDTO(projectService.deleteProject(id));
     }
-
-
 }

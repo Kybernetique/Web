@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import ru.ulstu.is.sbapp.itcompany.controllers.project.ProjectDTO;
 import ru.ulstu.is.sbapp.itcompany.services.ProjectService;
 
 import javax.validation.Valid;
@@ -20,20 +22,21 @@ public class ProjectMVC {
     @GetMapping
     public String getProjects(Model model) {
         model.addAttribute("projects",
-                projectService.findAllProjects()
-                        .stream()
-                        .map(ProjectDTO::new).toList());
+                projectService.findAllProjects().stream()
+                        .map(ProjectDTO::new)
+                        .toList());
         return "project";
     }
 
     @GetMapping(value = {"/edit", "/edit/{id}"})
     public String editProject(@PathVariable(required = false) Long id, Model model) {
         if (id == null || id <= 0) {
-            model.addAttribute("projectDTO", new ProjectDTO());
-        } else {
-            model.addAttribute("projectID", id);
-            model.addAttribute("projectDTO", new ProjectDTO(projectService.findProject(id)));
-            model.addAttribute("developers", projectService.findProject(id).getDevelopers());
+            model.addAttribute("projectDto",new ProjectDTO());
+        }
+        else {
+            model.addAttribute("projectId", id);
+            model.addAttribute("projectDto", new ProjectDTO(projectService.findProject(id)));
+            model.addAttribute("developeres", projectService.findProject(id).getDevelopers());
         }
         return "project-edit";
     }
@@ -41,15 +44,16 @@ public class ProjectMVC {
     @PostMapping(value = {"", "/{id}"})
     public String saveProject(@PathVariable(required = false) Long id,
                               @ModelAttribute @Valid ProjectDTO projectDTO,
-                              BindingResult bindingResult, Model model) {
+                              BindingResult bindingResult,
+                              Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "project-edit";
         }
         if (id == null || id <= 0) {
-            projectService.addProject(projectDTO.getName(), projectDTO.getDifficulty());
+            projectService.addProject(projectDTO.getName());
         } else {
-            projectService.updateProject(id, projectDTO.getName(), projectDTO.getDifficulty());
+            projectService.updateProject(id, projectDTO.getName());
         }
         return "redirect:/project";
     }
@@ -59,5 +63,4 @@ public class ProjectMVC {
         projectService.deleteProject(id);
         return "redirect:/project";
     }
-
 }
