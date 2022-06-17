@@ -42,6 +42,23 @@ public class DeveloperDTO {
         }
     }
 
+    public DeveloperDTO(DeveloperDTO developerDTO) {
+        this.id = developerDTO.id;
+        this.firstName = developerDTO.getFirstName();
+        this.lastName = developerDTO.getLastName();
+        this.projectName = developerDTO.getProjectName();
+        this.jobName = developerDTO.getJobName();
+    }
+
+    public DeveloperDTO(Long id, String firstName, String lastName,
+                        String projectName, String jobName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.projectName = projectName;
+        this.jobName=jobName;
+    }
+
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public long getId() {
         return id;

@@ -23,25 +23,26 @@ public class DeveloperController {
 
     @GetMapping("/")
     public List<DeveloperDTO> getDeveloperes() {
-        return developerService.findAllDevelopers().stream()
-                .map(DeveloperDTO::new)
-                .toList();
+        return developerService.findAllDevelopers().stream().map(DeveloperDTO::new).toList();
     }
 
     @PostMapping("/")
     public DeveloperDTO createDeveloper(@RequestBody @Valid DeveloperDTO developerDto) {
-        return new DeveloperDTO(developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(),
-                developerDto.getCompany(), developerDto.getJob(),developerDto.getProject()));
+        return new DeveloperDTO(developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getProject()));
     }
 
     @PatchMapping("/{id}")
     public DeveloperDTO updateDeveloper(@PathVariable Long id, @RequestBody @Valid DeveloperDTO developerDTO) {
-        return new DeveloperDTO(developerService.updateDeveloper(id, developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompany(), developerDTO.getJob(),
-                developerDTO.getProject()));
+        return new DeveloperDTO(developerService.updateDeveloper(id, developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompany(), developerDTO.getJob(), developerDTO.getProject()));
     }
 
     @DeleteMapping("/{id}")
     public DeveloperDTO deleteDeveloper(@PathVariable Long id) {
         return new DeveloperDTO(developerService.deleteDeveloper(id));
+    }
+
+    @GetMapping("/getDevelopers")
+    public List<DeveloperDTO> getDevelopers(@RequestParam("projectName") String projectName, @RequestParam("jobName") String jobName) {
+        return developerService.findByNameContaining(projectName, jobName);
     }
 }

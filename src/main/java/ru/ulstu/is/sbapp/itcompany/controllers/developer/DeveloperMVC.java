@@ -22,8 +22,7 @@ public class DeveloperMVC {
     private final ProjectService projectService;
     private final JobService jobService;
 
-    public DeveloperMVC(DeveloperService developerService, CompanyService companyService,
-                        ProjectService projectService, JobService jobService) {
+    public DeveloperMVC(DeveloperService developerService, CompanyService companyService, ProjectService projectService, JobService jobService) {
         this.developerService = developerService;
         this.companyService = companyService;
         this.projectService = projectService;
@@ -32,19 +31,28 @@ public class DeveloperMVC {
 
     @GetMapping
     public String getDevelopers(Model model) {
-        model.addAttribute("developers",
-                developerService.findAllDevelopers().stream()
-                        .map(DeveloperDTO::new)
-                        .toList());
+        model.addAttribute("developers", developerService.findAllDevelopers().stream().map(DeveloperDTO::new).toList());
         return "developer";
     }
+
+    @GetMapping("/getDevelopers")
+    public String getDevelopersQuery(@RequestParam(name = "projectName", defaultValue = "Компилятор языка C") String projectName,
+                                     @RequestParam(name = "jobName", defaultValue = "Backend") String jobName,
+                                     Model model) {
+        model.addAttribute("projects", projectService.findAllProjects().stream().map(ProjectDTO::new).toList());
+        model.addAttribute("jobs", jobService.findAllJobs().stream().map(JobDTO::new).toList());
+        model.addAttribute("projectName", projectName);
+        model.addAttribute("jobName", jobName);
+        model.addAttribute("developerDto", developerService.findByNameContaining(projectName, jobName).stream().map(DeveloperDTO::new).toList());
+        return "query";
+    }
+
 
     @GetMapping(value = {"/edit", "/edit/{id}"})
     public String editDeveloper(@PathVariable(required = false) Long id, Model model) {
         if (id == null || id <= 0) {
             model.addAttribute("developerDto", new DeveloperDTO());
-        }
-        else {
+        } else {
             model.addAttribute("developerId", id);
             model.addAttribute("developerDto", new DeveloperDTO(developerService.findDeveloper(id)));
         }
@@ -55,10 +63,7 @@ public class DeveloperMVC {
     }
 
     @PostMapping(value = {"", "/{id}"})
-    public String saveDeveloper(@PathVariable(required = false) Long id,
-                                @ModelAttribute @Valid DeveloperDTO developerDto,
-                                BindingResult bindingResult,
-                                Model model) {
+    public String saveDeveloper(@PathVariable(required = false) Long id, @ModelAttribute @Valid DeveloperDTO developerDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "developer-edit";
@@ -76,4 +81,5 @@ public class DeveloperMVC {
         developerService.deleteDeveloper(id);
         return "redirect:/developer";
     }
+
 }

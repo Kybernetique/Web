@@ -10,6 +10,7 @@ import ru.ulstu.is.sbapp.util.validation.ValidatorUtil;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DeveloperService {
@@ -117,5 +118,12 @@ public class DeveloperService {
     @Transactional
     public void deleteAllDevelopers() {
         developerRepository.deleteAll();
+    }
+
+    public List<DeveloperDTO> findByNameContaining(String projectName, String jobName) {
+        return developerRepository.findByNameContaining(projectName, jobName)
+                .stream()
+                .map(DeveloperDTO::new)
+                .collect(Collectors.toList());
     }
 }
