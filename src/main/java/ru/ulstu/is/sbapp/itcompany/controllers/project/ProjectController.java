@@ -29,13 +29,16 @@ public class ProjectController {
     }
 
     @PostMapping("/")
-    public ProjectDTO createProject(@RequestParam("name") String name) {
-        return new ProjectDTO(projectService.addProject(name));
+    public ProjectDTO createProject(@RequestParam("firstName") String firstName,
+                                    @RequestParam("lastName") String lastName,
+                                    @RequestParam("age") int age) {
+        return new ProjectDTO(projectService.addProject(firstName, lastName, age));
     }
 
     @PatchMapping("/{id}")
     public ProjectDTO updateProject(@PathVariable Long id, @RequestBody @Valid ProjectDTO projectDTO){
-        return new ProjectDTO(projectService.updateProject(id, projectDTO.getName()));
+        return new ProjectDTO(projectService.updateProject(id, projectDTO.getFirstName(),
+                projectDTO.getLastName(), projectDTO.getAge()));
     }
 
     @DeleteMapping("/{id}")

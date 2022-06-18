@@ -1,88 +1,54 @@
 package ru.ulstu.is.sbapp.itcompany.models;
 
-import ru.ulstu.is.sbapp.itcompany.models.Developer;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-//один ко многим с Car
-//в одном СТО много автомобилей
+
 @Entity
 public class Project {
     @Id
-    @SequenceGenerator(name = "project_seq",
-            sequenceName = "project_sequence", allocationSize = 1)
+    @SequenceGenerator(name = "project_seq", sequenceName = "project_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
     private Long id;
-    @NotBlank(message="Project name can't be null or empty")
-    private String name;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "project_fk")
-    private List<Developer> developers = new ArrayList<>();
+    @NotBlank(message = "Project name can't be null or empty")
+    private String firstName;
+    private String lastName;
+    private int age;
 
     public Project() {
     }
 
-    public Project(String name) {
-        this.name = name;
-    }
-
-    public Project(String name, List<Developer> developers){
-        this.name = name;
-        this.developers = developers;
+    public Project(String firstName, String lastName, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public List<Developer> getDevelopers(){
-        return developers;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+    public  String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName=lastName;
     }
 
-    public void setDeveloper(Developer developer){
-        if(!developers.contains(developer))
-        {
-            developers.add(developer);
-            if(developer.getProject() != this)
-            {
-                developer.setProject(this);
-            }
-        }
+    public int getAge() {
+        return age;
     }
-
-    public Developer removeDeveloper(Long developerId) {
-        for (var dev : developers) {
-            if (Objects.equals(dev.getId(), developerId)){
-                developers.remove(dev);
-                return dev;
-            }
-        }
-        return null;
-    }
-
-    public void updateDeveloper(Long id, Developer d) {
-        for (var dev : developers) {
-            if(Objects.equals(dev.getId(), d.getId())) {
-                dev = d;
-                return;
-            }
-        }
-    }
-
-    public void removeAllDevelopers() {
-        developers.clear();
+    public void setAge(int age) {
+        this.age=age;
     }
 
     @Override
@@ -99,6 +65,6 @@ public class Project {
     }
 
     public String toString() {
-        return name;
+        return firstName + lastName + age;
     }
 }

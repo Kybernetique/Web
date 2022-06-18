@@ -70,12 +70,6 @@ public class Developer {
             company.setDeveloper(this);
         }
     }
-    public void setProject(Project project){
-        this.project = project;
-        if(!project.getDevelopers().contains(this)){
-            project.setDeveloper(this);
-        }
-    }
 
     public void setJob(Job job) {
         this.job = job;
@@ -90,14 +84,6 @@ public class Developer {
             company.removeDeveloper(getId());
         }
         company = null;
-    }
-
-    public void removeProject() {
-        if(project.removeDeveloper(getId()) != null)
-        {
-            project.removeDeveloper(getId());
-        }
-        project = null;
     }
 
     @Override

@@ -11,24 +11,16 @@
     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
     <form action="#" th:action="@{/project/{id}(id=${id})}" th:object="${projectDto}" method="post">
         <div class="mb-3">
-            <label for="name" class="form-label">Название</label>
-            <input type="text" class="form-control" id="name" th:field="${projectDto.name}" required>
+            <label for="firstName" class="form-label">Имя</label>
+            <input type="text" class="form-control" id="firstName" th:field="${projectDto.firstName}" required>
         </div>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Фамилия</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="developer, iterator: ${developers}">
-                    <td th:text="${developer.id}" style="width: 60%"></td>
-                    <td th:text="${developer.lastName}" style="width: 60%"></td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Фамилия</label>
+            <input type="text" class="form-control" id="lastName" th:field="${projectDto.lastName}" required>
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">Возраст</label>
+            <input type="text" class="form-control" id="age" th:field="${projectDto.age}" required>
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary button-fixed">

@@ -3,32 +3,47 @@ package ru.ulstu.is.sbapp.itcompany.controllers.project;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.ulstu.is.sbapp.itcompany.models.Project;
 
-import java.util.*;
-
 public class ProjectDTO {
     private long id;
-    private String name;
-    private Map<Long, String> developers;
+    private String firstName;
+    private String lastName;
+    private int age;
 
-    public ProjectDTO() {}
+    public ProjectDTO() {
+    }
 
-    public ProjectDTO(Project project){
+    public ProjectDTO(Project project) {
         this.id = project.getId();
-        this.name = project.getName();
-        developers = new HashMap<>();
-        if (project.getDevelopers() != null) {
-            for (var developer : project.getDevelopers()) {
-                developers.put(developer.getId(), developer.getLastName());
-            }
-        }
+        this.firstName = project.getFirstName();
+        this.lastName = project.getLastName();
+        this.age = project.getAge();
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public long getId() { return id; }
+    public long getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public Map<Long, String> getDevelopers() { return developers; }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
 }

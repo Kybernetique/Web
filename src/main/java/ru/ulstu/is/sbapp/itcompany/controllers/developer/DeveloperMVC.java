@@ -35,7 +35,7 @@ public class DeveloperMVC {
         return "developer";
     }
 
-    @GetMapping("/getDevelopers")
+/*    @GetMapping("/getDevelopers")
     public String getDevelopersQuery(@RequestParam(name = "projectName", defaultValue = "Компилятор языка C") String projectName,
                                      @RequestParam(name = "jobName", defaultValue = "Backend") String jobName,
                                      Model model) {
@@ -43,9 +43,11 @@ public class DeveloperMVC {
         model.addAttribute("jobs", jobService.findAllJobs().stream().map(JobDTO::new).toList());
         model.addAttribute("projectName", projectName);
         model.addAttribute("jobName", jobName);
+*//*
         model.addAttribute("developerDto", developerService.findByNameContaining(projectName, jobName).stream().map(DeveloperDTO::new).toList());
+*//*
         return "query";
-    }
+    }*/
 
 
     @GetMapping(value = {"/edit", "/edit/{id}"})

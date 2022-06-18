@@ -40,9 +40,9 @@ public class DeveloperController {
     public DeveloperDTO deleteDeveloper(@PathVariable Long id) {
         return new DeveloperDTO(developerService.deleteDeveloper(id));
     }
-
+/*
     @GetMapping("/getDevelopers")
     public List<DeveloperDTO> getDevelopers(@RequestParam("projectName") String projectName, @RequestParam("jobName") String jobName) {
         return developerService.findByNameContaining(projectName, jobName);
-    }
+    }*/
 }

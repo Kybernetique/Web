@@ -33,7 +33,7 @@ public class DeveloperDTO {
         }
         if (developer.getProject() != null) {
             project = developer.getProject().getId();
-            projectName = developer.getProject().getName();
+            projectName = developer.getProject().getFirstName();
         }
         if (developer.getJob() != null) {
             job = developer.getJob().getID();

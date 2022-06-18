@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import ru.ulstu.is.sbapp.itcompany.controllers.project.ProjectDTO;
 import ru.ulstu.is.sbapp.itcompany.services.ProjectService;
 
 import javax.validation.Valid;
@@ -36,7 +35,6 @@ public class ProjectMVC {
         else {
             model.addAttribute("projectId", id);
             model.addAttribute("projectDto", new ProjectDTO(projectService.findProject(id)));
-            model.addAttribute("developers", projectService.findProject(id).getDevelopers());
         }
         return "project-edit";
     }
@@ -51,9 +49,11 @@ public class ProjectMVC {
             return "project-edit";
         }
         if (id == null || id <= 0) {
-            projectService.addProject(projectDTO.getName());
+            projectService.addProject(projectDTO.getFirstName(), projectDTO.getLastName(),
+                    projectDTO.getAge());
         } else {
-            projectService.updateProject(id, projectDTO.getName());
+            projectService.updateProject(id, projectDTO.getFirstName(), projectDTO.getLastName(),
+                    projectDTO.getAge());
         }
         return "redirect:/project";
     }

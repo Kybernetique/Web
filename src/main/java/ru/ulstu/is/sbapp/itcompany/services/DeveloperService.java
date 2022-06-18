@@ -40,7 +40,6 @@ public class DeveloperService {
         var developer = new Developer(firstName, lastName);
         developer.setCompany(company);
         developer.setJob(job);
-        developer.setProject(project);
         validatorUtil.validate(developer);
         return developerRepository.save(developer);
     }
@@ -83,14 +82,6 @@ public class DeveloperService {
             currentDeveloper.setCompany(company);
         }
 
-        if (currentDeveloper.getProject().getId().equals(projectId)) {
-            currentDeveloper.getProject().updateDeveloper(id, currentDeveloper);
-        }
-        else {
-            currentDeveloper.getProject().removeDeveloper(id);
-            currentDeveloper.setProject(project);
-        }
-
         if (currentDeveloper.getJob().getID().equals(jobId)) {
             currentDeveloper.getJob().updateDeveloper(id, currentDeveloper);
         }
@@ -120,10 +111,10 @@ public class DeveloperService {
         developerRepository.deleteAll();
     }
 
-    public List<DeveloperDTO> findByNameContaining(String projectName, String jobName) {
+/*    public List<DeveloperDTO> findByNameContaining(String projectName, String jobName) {
         return developerRepository.findByNameContaining(projectName, jobName)
                 .stream()
                 .map(DeveloperDTO::new)
                 .collect(Collectors.toList());
-    }
+    }*/
 }

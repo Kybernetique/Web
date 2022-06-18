@@ -8,8 +8,6 @@ import org.springframework.util.StringUtils;
 import ru.ulstu.is.sbapp.itcompany.controllers.project.ProjectDTO;
 import ru.ulstu.is.sbapp.itcompany.models.Project;
 import ru.ulstu.is.sbapp.itcompany.repositories.ProjectRepository;
-import ru.ulstu.is.sbapp.itcompany.services.InProjectFoundDevelopersException;
-import ru.ulstu.is.sbapp.itcompany.services.ProjectNotFoundException;
 import ru.ulstu.is.sbapp.util.validation.ValidatorUtil;
 
 import java.util.List;
@@ -27,18 +25,18 @@ public class ProjectService {
     }
 
     @Transactional
-    public Project addProject(String name) {
-        if(!StringUtils.hasText(name)) {
+    public Project addProject(String firstName, String lastName, int age) {
+        if(!StringUtils.hasText(firstName)) {
             throw new IllegalArgumentException("Project name is null or empty");
         }
-        final Project project = new Project(name);
+        final Project project = new Project(firstName, lastName, age);
         validatorUtil.validate(project);
         return projectRepository.save(project);
     }
 
     @Transactional
     public ProjectDTO addProject(ProjectDTO projectDTO) {
-        return new ProjectDTO(addProject(projectDTO.getName()));
+        return new ProjectDTO(addProject(projectDTO.getFirstName(), projectDTO.getLastName(), projectDTO.getAge()));
     }
 
     @Transactional(readOnly = true)
@@ -53,19 +51,23 @@ public class ProjectService {
     }
 
     @Transactional
-    public Project updateProject(Long id, String name) {
+    public Project updateProject(Long id, String name, String lastName, int age) {
         if (!StringUtils.hasText(name)) {
             throw new IllegalArgumentException("Project name is null or empty");
         }
         final Project currentProject = findProject(id);
-        currentProject.setName(name);
+        currentProject.setFirstName(name);
+        currentProject.setLastName(lastName);
+        currentProject.setAge(age);
+
         validatorUtil.validate(currentProject);
         return projectRepository.save(currentProject);
     }
 
     @Transactional
     public ProjectDTO updateProject(ProjectDTO projectDTO) {
-        return new ProjectDTO(updateProject(projectDTO.getId(), projectDTO.getName()));
+        return new ProjectDTO(updateProject(projectDTO.getId(), projectDTO.getFirstName(),
+                projectDTO.getLastName(), projectDTO.getAge()));
     }
 
     @Transactional
@@ -75,7 +77,7 @@ public class ProjectService {
         return currentProject;
     }
 
-    @Transactional
+/*    @Transactional
     public void deleteAllProjects() throws InProjectFoundDevelopersException {
         var projects = findAllProjects();
         for (var project : projects) {
@@ -84,5 +86,5 @@ public class ProjectService {
             }
         }
         projectRepository.deleteAll();
-    }
+    }*/
 }

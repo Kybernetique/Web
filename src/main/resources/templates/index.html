@@ -6,8 +6,17 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div>It's works!</div>
-    <a href="123">ERROR</a>
+    <div class="card w-50" style="margin-top: 15px">
+        <div class="card-block">
+            <h3 class="card-title">Profile Name</h3>
+            <img class="page_avatar_img" src="https://content.foto.my.mail.ru/mail/4722074/_myphoto/i-2117.jpg"
+                 height="100" width="50">
+            <a class="btn btn-primary" style="background-color: #3177a8"
+               th:href="@{/project}">
+                <i class="fa-solid fa-plus"></i> Найти друзей
+            </a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

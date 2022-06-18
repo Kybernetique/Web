@@ -4,7 +4,7 @@
       layout:decorate="~{default}"
       xmlns:th="http://www.thymeleaf.org">>
 <head>
-    <title>СТО</title>
+    <title>Друг</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -20,7 +20,9 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">ID</th>
-                <th scope="col">Название</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Возраст</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -28,7 +30,9 @@
             <tr th:each="project, iterator: ${projects}">
                 <th scope="row" th:text="${iterator.index} + 1"></th>
                 <td th:text="${project.id}"></td>
-                <td th:text="${project.Name}" style="width: 60%"></td>
+                <td th:text="${project.firstName}" style="width: 60%"></td>
+                <td th:text="${project.lastName}" style="width: 60%"></td>
+                <td th:text="${project.age}" style="width: 60%"></td>
                 <td style="width: 10%">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-warning button-fixed button-sm"
