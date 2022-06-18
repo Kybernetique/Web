@@ -36,11 +36,11 @@
             </div>
         </div>
         <div class="mb-3">
-            <label for="project" class="form-label">Проект</label>
+            <label for="friend" class="form-label">Проект</label>
             <div class = "input-group">
-                <select class="form-control" id="project" th:field="${developerDto.project}">
-                    <option th:each = "project, iterator: ${projects}" th:value="${project.id}"
-                            th:text="${project.name}"></option>
+                <select class="form-control" id="friend" th:field="${developerDto.friend}">
+                    <option th:each = "friend, iterator: ${projects}" th:value="${friend.id}"
+                            th:text="${friend.name}"></option>
                 </select>
             </div>
         </div>

@@ -6,11 +6,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.ulstu.is.sbapp.itcompany.controllers.company.CompanyDTO;
 import ru.ulstu.is.sbapp.itcompany.controllers.job.JobDTO;
-import ru.ulstu.is.sbapp.itcompany.controllers.project.ProjectDTO;
+import ru.ulstu.is.sbapp.itcompany.controllers.friend.FriendDTO;
 import ru.ulstu.is.sbapp.itcompany.services.CompanyService;
 import ru.ulstu.is.sbapp.itcompany.services.DeveloperService;
 import ru.ulstu.is.sbapp.itcompany.services.JobService;
-import ru.ulstu.is.sbapp.itcompany.services.ProjectService;
+import ru.ulstu.is.sbapp.itcompany.services.FriendService;
 
 import javax.validation.Valid;
 
@@ -19,13 +19,13 @@ import javax.validation.Valid;
 public class DeveloperMVC {
     private final DeveloperService developerService;
     private final CompanyService companyService;
-    private final ProjectService projectService;
+    private final FriendService friendService;
     private final JobService jobService;
 
-    public DeveloperMVC(DeveloperService developerService, CompanyService companyService, ProjectService projectService, JobService jobService) {
+    public DeveloperMVC(DeveloperService developerService, CompanyService companyService, FriendService friendService, JobService jobService) {
         this.developerService = developerService;
         this.companyService = companyService;
-        this.projectService = projectService;
+        this.friendService = friendService;
         this.jobService = jobService;
     }
 
@@ -60,7 +60,7 @@ public class DeveloperMVC {
         }
         model.addAttribute("companies", companyService.findAllCompanies().stream().map(CompanyDTO::new).toList());
         model.addAttribute("jobs", jobService.findAllJobs().stream().map(JobDTO::new).toList());
-        model.addAttribute("projects", projectService.findAllProjects().stream().map(ProjectDTO::new).toList());
+        model.addAttribute("projects", friendService.findAllFriends().stream().map(FriendDTO::new).toList());
         return "developer-edit";
     }
 
@@ -71,9 +71,9 @@ public class DeveloperMVC {
             return "developer-edit";
         }
         if (id == null || id <= 0) {
-            developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getProject());
+            developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getFriend());
         } else {
-            developerService.updateDeveloper(id, developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getProject());
+            developerService.updateDeveloper(id, developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getFriend());
         }
         return "redirect:/developer";
     }

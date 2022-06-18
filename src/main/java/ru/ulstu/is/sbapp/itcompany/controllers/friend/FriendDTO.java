@@ -1,22 +1,22 @@
-package ru.ulstu.is.sbapp.itcompany.controllers.project;
+package ru.ulstu.is.sbapp.itcompany.controllers.friend;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.ulstu.is.sbapp.itcompany.models.Project;
+import ru.ulstu.is.sbapp.itcompany.models.Friend;
 
-public class ProjectDTO {
+public class FriendDTO {
     private long id;
     private String firstName;
     private String lastName;
     private int age;
 
-    public ProjectDTO() {
+    public FriendDTO() {
     }
 
-    public ProjectDTO(Project project) {
-        this.id = project.getId();
-        this.firstName = project.getFirstName();
-        this.lastName = project.getLastName();
-        this.age = project.getAge();
+    public FriendDTO(Friend friend) {
+        this.id = friend.getId();
+        this.firstName = friend.getFirstName();
+        this.lastName = friend.getLastName();
+        this.age = friend.getAge();
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

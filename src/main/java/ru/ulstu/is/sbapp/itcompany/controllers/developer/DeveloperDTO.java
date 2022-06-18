@@ -11,7 +11,7 @@ public class DeveloperDTO {
     private String firstName;
     private String lastName;
     private long company;
-    private long project;
+    private long friend;
     private long job;
     private String companyName;
     private String companyCountry;
@@ -31,9 +31,9 @@ public class DeveloperDTO {
             companyName = developer.getCompany().getName();
             companyCountry = developer.getCompany().getCountry();
         }
-        if (developer.getProject() != null) {
-            project = developer.getProject().getId();
-            projectName = developer.getProject().getFirstName();
+        if (developer.getFriend() != null) {
+            friend = developer.getFriend().getId();
+            projectName = developer.getFriend().getFirstName();
         }
         if (developer.getJob() != null) {
             job = developer.getJob().getID();
@@ -72,8 +72,8 @@ public class DeveloperDTO {
         return lastName;
     }
 
-    public long getProject() {
-        return project;
+    public long getFriend() {
+        return friend;
     }
 
     public long getCompany() {
@@ -92,8 +92,8 @@ public class DeveloperDTO {
         this.lastName = lastName;
     }
 
-    public void setProject(long project) {
-        this.project = project;
+    public void setFriend(long friend) {
+        this.friend = friend;
     }
 
     public void setCompany(long company) {

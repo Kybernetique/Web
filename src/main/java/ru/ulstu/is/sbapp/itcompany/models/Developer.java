@@ -1,6 +1,4 @@
 package ru.ulstu.is.sbapp.itcompany.models;
-import ru.ulstu.is.sbapp.itcompany.models.Company;
-import ru.ulstu.is.sbapp.itcompany.models.Project;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,8 +21,8 @@ public class Developer {
     private Company company;
 
     @ManyToOne()
-    @JoinColumn(name = "project_fk")
-    private Project project;
+    @JoinColumn(name = "friend_fk")
+    private Friend friend;
 
     @ManyToOne
     @JoinColumn(name = "job_fk")
@@ -52,7 +50,7 @@ public class Developer {
 
     public Company getCompany(){ return company; }
 
-    public Project getProject(){ return project; }
+    public Friend getFriend(){ return friend; }
 
     public Job getJob() {return job;}
 

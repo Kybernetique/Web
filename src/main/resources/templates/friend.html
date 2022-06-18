@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <div>
         <a class="btn btn-success button-fixed"
-           th:href="@{/project/edit/}">
+           th:href="@{/friend/edit/}">
             <i class="fa-solid fa-plus"></i> Добавить
         </a>
     </div>
@@ -27,25 +27,25 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="project, iterator: ${projects}">
+            <tr th:each="friend, iterator: ${friends}">
                 <th scope="row" th:text="${iterator.index} + 1"></th>
-                <td th:text="${project.id}"></td>
-                <td th:text="${project.firstName}" style="width: 60%"></td>
-                <td th:text="${project.lastName}" style="width: 60%"></td>
-                <td th:text="${project.age}" style="width: 60%"></td>
+                <td th:text="${friend.id}"></td>
+                <td th:text="${friend.firstName}" style="width: 60%"></td>
+                <td th:text="${friend.lastName}" style="width: 60%"></td>
+                <td th:text="${friend.age}" style="width: 60%"></td>
                 <td style="width: 10%">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-warning button-fixed button-sm"
-                           th:href="@{/project/edit/{id}(id=${project.id})}">
+                           th:href="@{/friend/edit/{id}(id=${friend.id})}">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Изменить
                         </a>
                         <button type="button" class="btn btn-danger button-fixed button-sm"
-                                th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${project.id}').click()|">
+                                th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${friend.id}').click()|">
                             <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                         </button>
                     </div>
-                    <form th:action="@{/project/delete/{id}(id=${project.id})}" method="post">
-                        <button th:id="'remove-' + ${project.id}" type="submit" style="display: none">
+                    <form th:action="@{/friend/delete/{id}(id=${friend.id})}" method="post">
+                        <button th:id="'remove-' + ${friend.id}" type="submit" style="display: none">
                             Удалить
                         </button>
                     </form>

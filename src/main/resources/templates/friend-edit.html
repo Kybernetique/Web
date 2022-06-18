@@ -9,25 +9,25 @@
 <body>
 <div layout:fragment="content">
     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
-    <form action="#" th:action="@{/project/{id}(id=${id})}" th:object="${projectDto}" method="post">
+    <form action="#" th:action="@{/friend/{id}(id=${id})}" th:object="${friendDto}" method="post">
         <div class="mb-3">
             <label for="firstName" class="form-label">Имя</label>
-            <input type="text" class="form-control" id="firstName" th:field="${projectDto.firstName}" required>
+            <input type="text" class="form-control" id="firstName" th:field="${friendDto.firstName}" required>
         </div>
         <div class="mb-3">
             <label for="lastName" class="form-label">Фамилия</label>
-            <input type="text" class="form-control" id="lastName" th:field="${projectDto.lastName}" required>
+            <input type="text" class="form-control" id="lastName" th:field="${friendDto.lastName}" required>
         </div>
         <div class="mb-3">
             <label for="age" class="form-label">Возраст</label>
-            <input type="text" class="form-control" id="age" th:field="${projectDto.age}" required>
+            <input type="text" class="form-control" id="age" th:field="${friendDto.age}" required>
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary button-fixed">
                 <span th:if="${id == null}">Добавить</span>
                 <span th:if="${id != null}">Обновить</span>
             </button>
-            <a class="btn btn-secondary button-fixed" th:href="@{/project}">
+            <a class="btn btn-secondary button-fixed" th:href="@{/friend}">
                 Назад
             </a>
         </div>

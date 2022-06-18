@@ -10,7 +10,6 @@ import ru.ulstu.is.sbapp.util.validation.ValidatorUtil;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class DeveloperService {
@@ -18,13 +17,13 @@ public class DeveloperService {
     private final ValidatorUtil validatorUtil;
     private final CompanyService companyService;
     private final JobService jobService;
-    private final ProjectService projectService;
+    private final FriendService friendService;
 
     public DeveloperService(DeveloperRepository developerRepository, ValidatorUtil validatorUtil, CompanyService companyService,
-                      JobService jobService, ProjectService projectService) {
+                      JobService jobService, FriendService friendService) {
         this.developerRepository = developerRepository;
         this.validatorUtil = validatorUtil;
-        this.projectService = projectService;
+        this.friendService = friendService;
         this.jobService = jobService;
         this.companyService = companyService;
     }
@@ -36,7 +35,7 @@ public class DeveloperService {
         }
         var company = companyService.findCompany(companyId);
         var job = jobService.findJob(jobId);
-        var project = projectService.findProject(projectId);
+        var friend = friendService.findFriend(projectId);
         var developer = new Developer(firstName, lastName);
         developer.setCompany(company);
         developer.setJob(job);
@@ -47,7 +46,7 @@ public class DeveloperService {
     @Transactional
     public DeveloperDTO addDeveloper(DeveloperDTO developerDTO) {
         return new DeveloperDTO(addDeveloper(developerDTO.getFirstName(), developerDTO.getLastName(),
-                developerDTO.getCompany(), developerDTO.getJob(), developerDTO.getProject()));
+                developerDTO.getCompany(), developerDTO.getJob(), developerDTO.getFriend()));
     }
 
 
@@ -71,7 +70,7 @@ public class DeveloperService {
         final Developer currentDeveloper = findDeveloper(id);
         var company = companyService.findCompany(companyId);
         var job = jobService.findJob(jobId);
-        var project = projectService.findProject(projectId);
+        var project = friendService.findFriend(projectId);
         currentDeveloper.setFirstName(firstName);
         currentDeveloper.setLastName(lastName);
         if (currentDeveloper.getCompany().getId().equals(companyId)) {
@@ -96,7 +95,7 @@ public class DeveloperService {
     @Transactional
     public DeveloperDTO updateDeveloper(DeveloperDTO developerDto) {
         return new DeveloperDTO(updateDeveloper(developerDto.getId(), developerDto.getFirstName(),
-                developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getProject()));
+                developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getFriend()));
     }
 
     @Transactional

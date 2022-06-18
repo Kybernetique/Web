@@ -2,30 +2,29 @@ package ru.ulstu.is.sbapp.itcompany.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Friend {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    @NotBlank(message = "Friend's name cannot be null or empty")
+    @SequenceGenerator(name = "project_seq", sequenceName = "project_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
+    private Long id;
+    @NotBlank(message = "Project name can't be null or empty")
     private String firstName;
-    @NotBlank(message = "Friend's last name cannot be null or empty")
     private String lastName;
-    @NotBlank(message = "Friend's age cannot be null or empty")
-    private String age;
+    private int age;
 
     public Friend() {
     }
 
-    public Friend(String firstName, String lastName, String age) {
+    public Friend(String firstName, String lastName, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -37,19 +36,35 @@ public class Friend {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+
+    public  String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName=lastName;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
+    public void setAge(int age) {
+        this.age=age;
+    }
 
-    public void setAge(String age) {
-        this.age = age;
+    @Override
+    public boolean equals(Object p) {
+        if (this == p) return true;
+        if (p == null || getClass() != p.getClass()) return false;
+        Friend friend = (Friend) p;
+        return Objects.equals(id, friend.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public String toString() {
+        return firstName + lastName + age;
     }
 }

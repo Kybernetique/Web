@@ -15,8 +15,8 @@
         <label class="form-label">Проект</label>
         <select id="projectName" class="form-select mb-3" th:name="projectName">
             <option
-                    th:each="project: ${projects}" th:selected="${projectName} == ${project.name}"><span
-                    th:text="${project.name}"></span>
+                    th:each="friend: ${projects}" th:selected="${projectName} == ${friend.name}"><span
+                    th:text="${friend.name}"></span>
             </option>
         </select>
 

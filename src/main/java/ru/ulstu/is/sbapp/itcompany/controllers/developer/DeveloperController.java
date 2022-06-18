@@ -28,12 +28,12 @@ public class DeveloperController {
 
     @PostMapping("/")
     public DeveloperDTO createDeveloper(@RequestBody @Valid DeveloperDTO developerDto) {
-        return new DeveloperDTO(developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getProject()));
+        return new DeveloperDTO(developerService.addDeveloper(developerDto.getFirstName(), developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getFriend()));
     }
 
     @PatchMapping("/{id}")
     public DeveloperDTO updateDeveloper(@PathVariable Long id, @RequestBody @Valid DeveloperDTO developerDTO) {
-        return new DeveloperDTO(developerService.updateDeveloper(id, developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompany(), developerDTO.getJob(), developerDTO.getProject()));
+        return new DeveloperDTO(developerService.updateDeveloper(id, developerDTO.getFirstName(), developerDTO.getLastName(), developerDTO.getCompany(), developerDTO.getJob(), developerDTO.getFriend()));
     }
 
     @DeleteMapping("/{id}")
