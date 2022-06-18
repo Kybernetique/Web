@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import ru.ulstu.is.sbapp.itcompany.models.developer.DeveloperDTO;
-import ru.ulstu.is.sbapp.itcompany.models.developer.Developer;
+import ru.ulstu.is.sbapp.itcompany.models.Developer;
 import ru.ulstu.is.sbapp.itcompany.repositories.DeveloperRepository;
 import ru.ulstu.is.sbapp.util.validation.ValidatorUtil;
 
@@ -15,31 +15,22 @@ import java.util.Optional;
 public class DeveloperService {
     private final DeveloperRepository developerRepository;
     private final ValidatorUtil validatorUtil;
-    private final CompanyService companyService;
-    private final JobService jobService;
-    private final ProjectService projectService;
+    private final FriendService friendService;
 
     public DeveloperService(DeveloperRepository developerRepository, ValidatorUtil validatorUtil, CompanyService companyService,
-                      JobService jobService, ProjectService projectService) {
+                      JobService jobService, FriendService friendService) {
         this.developerRepository = developerRepository;
         this.validatorUtil = validatorUtil;
-        this.projectService = projectService;
-        this.jobService = jobService;
-        this.companyService = companyService;
+        this.friendService = friendService;
     }
 
     @Transactional
-    public Developer addDeveloper(String firstName, String lastName, long companyId, long jobId,long projectId) {
-        if(!StringUtils.hasText(firstName) || companyId == 0 || projectId == 0) {
+    public Developer addDeveloper(String firstName, String lastName, long friendId) {
+        if(!StringUtils.hasText(firstName) || friendId == 0) {
             throw new IllegalArgumentException("Developer's data is null or empty");
         }
-        var company = companyService.findCompany(companyId);
-        var job = jobService.findJob(jobId);
-        var project = projectService.findProject(projectId);
+        var friend = friendService.findFriend(friendId);
         var developer = new Developer(firstName, lastName);
-        developer.setCompany(company);
-        developer.setJob(job);
-        developer.setProject(project);
         validatorUtil.validate(developer);
         return developerRepository.save(developer);
     }
@@ -47,7 +38,7 @@ public class DeveloperService {
     @Transactional
     public DeveloperDTO addDeveloper(DeveloperDTO developerDTO) {
         return new DeveloperDTO(addDeveloper(developerDTO.getFirstName(), developerDTO.getLastName(),
-                developerDTO.getCompany(), developerDTO.getJob(), developerDTO.getProject()));
+                developerDTO.getFriend()));
     }
 
 
@@ -63,39 +54,21 @@ public class DeveloperService {
     }
 
     @Transactional
-    public Developer updateDeveloper(Long id, String firstName, String lastName, Long companyId,
-                                     Long jobId, Long projectId) {
+    public Developer updateDeveloper(Long id, String firstName, String lastName, Long friendId) {
         if(!StringUtils.hasText(firstName)) {
             throw new IllegalArgumentException("Developer's data is null or empty");
         }
         final Developer currentDeveloper = findDeveloper(id);
-        var company = companyService.findCompany(companyId);
-        var job = jobService.findJob(jobId);
-        var project = projectService.findProject(projectId);
+        var friend = friendService.findFriend(friendId);
         currentDeveloper.setFirstName(firstName);
         currentDeveloper.setLastName(lastName);
-        if (currentDeveloper.getCompany().getId().equals(companyId)) {
-            currentDeveloper.getCompany().updateDeveloper(id, currentDeveloper);
-        }
-        else {
-            currentDeveloper.getCompany().removeDeveloper(id);
-            currentDeveloper.setCompany(company);
-        }
 
-        if (currentDeveloper.getProject().getId().equals(projectId)) {
-            currentDeveloper.getProject().updateDeveloper(id, currentDeveloper);
+        if (currentDeveloper.getFriend().getId().equals(friendId)) {
+            currentDeveloper.getFriend().updateDeveloper(id, currentDeveloper);
         }
         else {
-            currentDeveloper.getProject().removeDeveloper(id);
-            currentDeveloper.setProject(project);
-        }
-
-        if (currentDeveloper.getJob().getID().equals(jobId)) {
-            currentDeveloper.getJob().updateDeveloper(id, currentDeveloper);
-        }
-        else {
-            currentDeveloper.getJob().removeDeveloper(id);
-            currentDeveloper.setJob(job);
+            currentDeveloper.getFriend().removeDeveloper(id);
+            currentDeveloper.setFriend(friend);
         }
         validatorUtil.validate(currentDeveloper);
         return developerRepository.save(currentDeveloper);
@@ -104,7 +77,7 @@ public class DeveloperService {
     @Transactional
     public DeveloperDTO updateDeveloper(DeveloperDTO developerDto) {
         return new DeveloperDTO(updateDeveloper(developerDto.getId(), developerDto.getFirstName(),
-                developerDto.getLastName(), developerDto.getCompany(), developerDto.getJob(), developerDto.getProject()));
+                developerDto.getLastName(), developerDto.getFriend()));
     }
 
     @Transactional
@@ -118,4 +91,11 @@ public class DeveloperService {
     public void deleteAllDevelopers() {
         developerRepository.deleteAll();
     }
+
+/*    public List<DeveloperDTO> findByNameContaining(String projectName, String jobName) {
+        return developerRepository.findByNameContaining(projectName, jobName)
+                .stream()
+                .map(DeveloperDTO::new)
+                .collect(Collectors.toList());
+    }*/
 }

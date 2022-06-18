@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import ru.ulstu.is.sbapp.itcompany.models.company.CompanyDTO;
-import ru.ulstu.is.sbapp.itcompany.models.company.Company;
+import ru.ulstu.is.sbapp.itcompany.models.Company;
 import ru.ulstu.is.sbapp.itcompany.repositories.CompanyRepository;
 import ru.ulstu.is.sbapp.util.validation.ValidatorUtil;
 

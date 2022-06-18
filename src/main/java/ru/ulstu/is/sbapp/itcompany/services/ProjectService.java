@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import ru.ulstu.is.sbapp.itcompany.models.project.ProjectDTO;
-import ru.ulstu.is.sbapp.itcompany.models.project.Project;
 import ru.ulstu.is.sbapp.itcompany.repositories.ProjectRepository;
 import ru.ulstu.is.sbapp.util.validation.ValidatorUtil;
 
@@ -24,7 +22,7 @@ public class ProjectService {
         this.validatorUtil = validatorUtil;
     }
 
-    @Transactional
+/*    @Transactional
     public Project addProject(String name) {
         if(!StringUtils.hasText(name)) {
             throw new IllegalArgumentException("Project name is null or empty");
@@ -32,25 +30,27 @@ public class ProjectService {
         final Project project = new Project(name);
         validatorUtil.validate(project);
         return projectRepository.save(project);
-    }
+    }*/
+/*
 
     @Transactional
     public ProjectDTO addProject(ProjectDTO projectDTO) {
         return new ProjectDTO(addProject(projectDTO.getName()));
     }
+*/
 
-    @Transactional(readOnly = true)
+/*    @Transactional(readOnly = true)
     public Project findProject(Long id) {
         final Optional<Project> project = projectRepository.findById(id);
         return project.orElseThrow(() -> new ProjectNotFoundException(id));
-    }
+    }*/
 
-    @Transactional(readOnly = true)
+/*    @Transactional(readOnly = true)
     public List<Project> findAllProjects() {
         return projectRepository.findAll();
-    }
+    }*/
 
-    @Transactional
+/*    @Transactional
     public Project updateProject(Long id, String name) {
         if (!StringUtils.hasText(name)) {
             throw new IllegalArgumentException("Project name is null or empty");
@@ -59,20 +59,20 @@ public class ProjectService {
         currentProject.setName(name);
         validatorUtil.validate(currentProject);
         return projectRepository.save(currentProject);
-    }
+    }*/
 
-    @Transactional
+  /*  @Transactional
     public ProjectDTO updateProject(ProjectDTO projectDTO) {
         return new ProjectDTO(updateProject(projectDTO.getId(), projectDTO.getName()));
-    }
+    }*/
 
-    @Transactional
+   /* @Transactional
     public Project deleteProject(Long id) {
         final Project currentProject = findProject(id);
         projectRepository.delete(currentProject);
         return currentProject;
-    }
-
+    }*/
+/*
     @Transactional
     public void deleteAllProjects() throws InProjectFoundDevelopersException {
         var projects = findAllProjects();
@@ -82,5 +82,5 @@ public class ProjectService {
             }
         }
         projectRepository.deleteAll();
-    }
+    }*/
 }

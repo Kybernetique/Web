@@ -1,7 +1,4 @@
-package ru.ulstu.is.sbapp.itcompany.models.developer;
-import ru.ulstu.is.sbapp.itcompany.models.job.Job;
-import ru.ulstu.is.sbapp.itcompany.models.project.Project;
-import ru.ulstu.is.sbapp.itcompany.models.company.Company;
+package ru.ulstu.is.sbapp.itcompany.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,16 +17,9 @@ public class Developer {
     private String lastName;
 
     @ManyToOne()
-    @JoinColumn(name = "company_fk")
-    private Company company;
+    @JoinColumn(name = "friend_fk")
+    private Friend friend;
 
-    @ManyToOne()
-    @JoinColumn(name = "project_fk")
-    private Project project;
-
-    @ManyToOne
-    @JoinColumn(name = "job_fk")
-    private Job job;
 
     public Developer(){
     }
@@ -51,11 +41,11 @@ public class Developer {
         return lastName;
     }
 
-    public Company getCompany(){ return company; }
+    public Friend getFriend(){ return friend; }
 
-    public Project getProject(){ return project; }
-
-    public Job getJob() {return job;}
+    public void setFriend(Friend friend) {
+        this.friend= friend;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -63,42 +53,6 @@ public class Developer {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public void setCompany(Company company){
-        this.company = company;
-        if(!company.getDevelopers().contains(this)){
-            company.setDeveloper(this);
-        }
-    }
-    public void setProject(Project project){
-        this.project = project;
-        if(!project.getDevelopers().contains(this)){
-            project.setDeveloper(this);
-        }
-    }
-
-    public void setJob(Job job) {
-        this.job = job;
-        if (!job.getDevelopers().contains(this)) {
-            job.setDeveloper(this);
-        }
-    }
-
-    public void removeCompany() {
-        if(company.removeDeveloper(getId()) != null)
-        {
-            company.removeDeveloper(getId());
-        }
-        company = null;
-    }
-
-    public void removeProject() {
-        if(project.removeDeveloper(getId()) != null)
-        {
-            project.removeDeveloper(getId());
-        }
-        project = null;
     }
 
     @Override

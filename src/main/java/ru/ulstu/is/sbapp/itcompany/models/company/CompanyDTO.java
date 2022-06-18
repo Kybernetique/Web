@@ -1,8 +1,10 @@
 package ru.ulstu.is.sbapp.itcompany.models.company;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import ru.ulstu.is.sbapp.itcompany.models.Company;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CompanyDTO {
     private long id;

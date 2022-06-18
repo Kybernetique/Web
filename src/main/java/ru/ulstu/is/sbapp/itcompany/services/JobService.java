@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import ru.ulstu.is.sbapp.itcompany.models.job.JobDTO;
-import ru.ulstu.is.sbapp.itcompany.models.job.Job;
+import ru.ulstu.is.sbapp.itcompany.models.Job;
 import ru.ulstu.is.sbapp.itcompany.repositories.JobRepository;
 import ru.ulstu.is.sbapp.util.validation.ValidatorUtil;
 

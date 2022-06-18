@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>IP Example</title>
@@ -27,26 +26,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav" th:with="activeLink=${#request.requestURI}">
-            <a class="nav-link" href="/"
-               th:classappend="${#strings.equals(activeLink, '/')} ? 'active' : ''">Главная</a>
-            <a class="nav-link" href="/company"
-               th:classappend="${#strings.equals(activeLink, '/company')} ? 'active' : ''">Компании</a>
-            <a class="nav-link" href="/developer"
-               th:classappend="${#strings.equals(activeLink, '/developer')} ? 'active' : ''">Разработчики</a>
-            <a class="nav-link" href="/job"
-               th:classappend="${#strings.equals(activeLink, '/job')} ? 'active' : ''">Должности</a>
-            <a class="nav-link" href="/project"
-               th:classappend="${#strings.equals(activeLink, '/project')} ? 'active' : ''">Проекты</a>
-            <a class="nav-link" href="/rest-test"
-               th:classappend="${#strings.equals(activeLink, '/rest-test')} ? 'active' : ''">Пример запроса
-                к REST
-                API</a>
-            <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users"
-               th:classappend="${#strings.equals(activeLink, '/users')} ? 'active' : ''">Пользователи</a>
-            <a class="nav-link" href="/swagger-ui/index.html" target="_blank">Документация
-                REST API</a>
-            <a class="nav-link" href="/h2-console/" target="_blank">Консоль H2</a>
-            <a class="nav-link" href="/logout">Выход</a>
+                <a class="nav-link" href="/"
+                   th:classappend="${#strings.equals(activeLink, '/')} ? 'active' : ''">Главная</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/friend"
+                   th:classappend="${#strings.equals(activeLink, '/friend')} ? 'active' : ''">Добавить друзей</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users"
+                   th:classappend="${#strings.equals(activeLink, '/users')} ? 'active' : ''">Пользователи</a>
+                <a class="nav-link" href="/logout">
+                    Выход (<span th:text="${#authentication.name}"></span>)
+                </a>
+
             </ul>
         </div>
     </div>

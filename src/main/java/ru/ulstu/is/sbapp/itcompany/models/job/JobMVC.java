@@ -34,7 +34,6 @@ public class JobMVC {
         else {
             model.addAttribute("jobId", id);
             model.addAttribute("jobDto", new JobDTO(jobService.findJob(id)));
-            model.addAttribute("developers", jobService.findJob(id).getDevelopers());
         }
         return "job-edit";
     }

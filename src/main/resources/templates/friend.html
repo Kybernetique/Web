@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{default}" xmlns:th="http://www.thymeleaf.org">
+      layout:decorate="~{default}"
+      xmlns:th="http://www.thymeleaf.org">>
 <head>
-    <title>Разработчики</title>
+    <title>Друг</title>
 </head>
 <body>
 <div layout:fragment="content">
     <div>
         <a class="btn btn-success button-fixed"
-           th:href="@{/developer/edit/}">
+           th:href="@{/friend/edit/}">
             <i class="fa-solid fa-plus"></i> Добавить
-        </a>
-        <a class="btn btn-info button-fixed"
-           th:href="@{/developer/getDevelopers/}">
-            <i class="fa-solid fa-plus"></i> Поиск
         </a>
     </div>
     <div class="table-responsive">
@@ -25,34 +22,30 @@
                 <th scope="col">ID</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Фамилия</th>
-                <th scope="col">Компания</th>
-                <th scope="col">Должность</th>
-                <th scope="col">Проект</th>
+                <th scope="col">Возраст</th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="developer, iterator: ${developers}">
+            <tr th:each="friend, iterator: ${friends}">
                 <th scope="row" th:text="${iterator.index} + 1"></th>
-                <td th:text="${developer.id}"></td>
-                <td th:text="${developer.firstName}" style="width: 60%"></td>
-                <td th:text="${developer.lastName}" style="width: 60%"></td>
-                <td th:text="${developer.companyName} + ' ' + ${developer.companyCountry}" style="width: 60%"></td>
-                <td th:text="${developer.jobName} + ' ' + ${developer.jobHourlyRate}" style="width: 60%"></td>
-                <td th:text="${developer.projectName}" style="width: 60%"></td>
+                <td th:text="${friend.id}"></td>
+                <td th:text="${friend.firstName}" style="width: 60%"></td>
+                <td th:text="${friend.lastName}" style="width: 60%"></td>
+                <td th:text="${friend.age}" style="width: 60%"></td>
                 <td style="width: 10%">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-warning button-fixed button-sm"
-                           th:href="@{/developer/edit/{id}(id=${developer.id})}">
+                           th:href="@{/friend/edit/{id}(id=${friend.id})}">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Изменить
                         </a>
                         <button type="button" class="btn btn-danger button-fixed button-sm"
-                                th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${developer.id}').click()|">
+                                th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${friend.id}').click()|">
                             <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                         </button>
                     </div>
-                    <form th:action="@{/developer/delete/{id}(id=${developer.id})}" method="post">
-                        <button th:id="'remove-' + ${developer.id}" type="submit" style="display: none">
+                    <form th:action="@{/friend/delete/{id}(id=${friend.id})}" method="post">
+                        <button th:id="'remove-' + ${friend.id}" type="submit" style="display: none">
                             Удалить
                         </button>
                     </form>

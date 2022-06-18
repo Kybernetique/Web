@@ -1,6 +1,7 @@
 package ru.ulstu.is.sbapp.itcompany.models.developer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import ru.ulstu.is.sbapp.itcompany.models.Developer;
 
 import javax.validation.constraints.NotBlank;
 
@@ -9,14 +10,8 @@ public class DeveloperDTO {
     @NotBlank(message = "Model can't be null or empty")
     private String firstName;
     private String lastName;
-    private long company;
-    private long project;
-    private long job;
-    private String companyName;
-    private String companyCountry;
-    private String projectName;
-    private String jobName;
-    private Double jobHourlyRate;
+    private long friend;
+    private String friendName;
 
     public DeveloperDTO() {
     }
@@ -25,20 +20,17 @@ public class DeveloperDTO {
         this.id = developer.getId();
         this.firstName = developer.getFirstName();
         this.lastName = developer.getLastName();
-        if (developer.getCompany() != null) {
-            company = developer.getCompany().getId();
-            companyName = developer.getCompany().getName();
-            companyCountry = developer.getCompany().getCountry();
+        if (developer.getFriend() != null) {
+            friend = developer.getFriend().getId();
+            friendName = developer.getFriend().getFirstName();
         }
-        if (developer.getProject() != null) {
-            project = developer.getProject().getId();
-            projectName = developer.getProject().getName();
-        }
-        if (developer.getJob() != null) {
-            job = developer.getJob().getID();
-            jobName = developer.getJob().getName();
-            jobHourlyRate = developer.getJob().getHourlyRate();
-        }
+    }
+
+    public DeveloperDTO(DeveloperDTO developerDTO) {
+        this.id = developerDTO.id;
+        this.firstName = developerDTO.getFirstName();
+        this.lastName = developerDTO.getLastName();
+        this.friendName = developerDTO.getFriendName();
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -54,16 +46,8 @@ public class DeveloperDTO {
         return lastName;
     }
 
-    public long getProject() {
-        return project;
-    }
-
-    public long getCompany() {
-        return company;
-    }
-
-    public long getJob() {
-        return job;
+    public long getFriend() {
+        return friend;
     }
 
     public void setFirstName(String firstName) {
@@ -74,36 +58,11 @@ public class DeveloperDTO {
         this.lastName = lastName;
     }
 
-    public void setProject(long project) {
-        this.project = project;
+    public void setFriend(long friend) {
+        this.friend = friend;
     }
 
-    public void setCompany(long company) {
-        this.company = company;
+    public String getFriendName() {
+        return friendName;
     }
-
-    public void setJob(long job) {
-        this.job = job;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public String getCompanyCountry() {
-        return companyCountry;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public String getJobName() {
-        return jobName;
-    }
-
-    public Double getJobHourlyRate() {
-        return jobHourlyRate;
-    }
-
 }

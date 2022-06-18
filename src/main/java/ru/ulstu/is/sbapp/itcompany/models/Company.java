@@ -1,6 +1,6 @@
-package ru.ulstu.is.sbapp.itcompany.models.company;
+package ru.ulstu.is.sbapp.itcompany.models;
 
-import ru.ulstu.is.sbapp.itcompany.models.developer.Developer;
+import ru.ulstu.is.sbapp.itcompany.models.Developer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -63,10 +63,6 @@ public class Company {
         if(!developers.contains(developer))
         {
             developers.add(developer);
-            if(developer.getCompany() != this)
-            {
-                developer.setCompany(this);
-            }
         }
     }
 

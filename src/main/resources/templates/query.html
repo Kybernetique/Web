@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<!--    <style>
+   .form-select {
+       margin-bottom: 20px;
+   }
+    </style>-->
+</head>
+<body>
+<div layout:fragment="content">
+    <form action="#" th:action="@{/developer/getDevelopers}" method="get">
+        <label class="form-label">Проект</label>
+        <select id="projectName" class="form-select mb-3" th:name="projectName">
+            <option
+                    th:each="friend: ${projects}" th:selected="${projectName} == ${friend.name}"><span
+                    th:text="${friend.name}"></span>
+            </option>
+        </select>
+
+        <label class="form-label">Должность</label>
+        <select id="jobName" class="form-select mb-3" th:name="jobName">
+            <option
+                    th:each="job: ${jobs}" th:selected="${jobName} == ${job.name}"><span
+                    th:text="${job.name}"></span>
+            </option>
+        </select>
+
+        <button type="submit" class="btn btn-primary button-fixed">Найти</button>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Проект</th>
+                <th scope="col">Должность</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="check, iterator: ${developerDto}">
+                <th scope="row" th:text="${iterator.index} + 1"/>
+                <td th:text="${check.id}"/>
+                <td th:text="${check.firstName}"/>
+                <td th:text="${check.lastName}"/>
+                <td th:text="${check.projectName}"/>
+                <td th:text="${check.jobName}"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,4 @@
-package ru.ulstu.is.sbapp.itcompany.models.job;
-
-import ru.ulstu.is.sbapp.itcompany.models.developer.Developer;
+package ru.ulstu.is.sbapp.itcompany.models;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,9 +18,6 @@ public class Job {
     @Column(name = "hourly_rate")
     private Double hourlyRate;
 
-    @OneToMany(mappedBy = "job", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Developer> developers;
-
     public Job() {
     }
 
@@ -36,7 +31,6 @@ public class Job {
 
         this.name = name;
         this.hourlyRate = hourlyRate;
-        this.developers = developers;
     }
 
     public Long getID() {
@@ -61,30 +55,7 @@ public class Job {
         this.hourlyRate = hourlyRate;
     }
 
-    public List<Developer> getDevelopers() {
-        return developers;
-    }
-
-    public void setDeveloper(Developer developer) {
-        developers.add(developer);
-    }
-
-    public void updateDeveloper(Long id, Developer d) {
-        for (var dev : developers) {
-            if(Objects.equals(dev.getId(), d.getId())) {
-                dev = d;
-                return;
-            }
-        }
-    }
-
     public Developer removeDeveloper(Long developerId) {
-        for (var dev : developers) {
-            if (Objects.equals(dev.getId(), developerId)){
-                developers.remove(dev);
-                return dev;
-            }
-        }
         return null;
     }
 
