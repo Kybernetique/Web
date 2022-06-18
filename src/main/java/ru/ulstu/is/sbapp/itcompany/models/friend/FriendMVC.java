@@ -1,5 +1,7 @@
 package ru.ulstu.is.sbapp.itcompany.models.friend;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,15 @@ public class FriendMVC {
                         .map(FriendDTO::new)
                         .toList());
         return "friend";
+    }
+
+    @GetMapping("/getMyFriends")
+    public String getMyFriends(Model model) {
+        model.addAttribute("myFriends",
+                friendService.findAllFriends().stream()
+                        .map(FriendDTO::new)
+                        .toList());
+        return "myfriends";
     }
 
     @GetMapping(value = {"/edit", "/edit/{id}"})
@@ -56,6 +67,7 @@ public class FriendMVC {
         }
         return "redirect:/friend";
     }
+
 
     @PostMapping("/delete/{id}")
     public String deleteFriend(@PathVariable Long id) {

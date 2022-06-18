@@ -28,10 +28,15 @@
             <ul class="navbar-nav" th:with="activeLink=${#request.requestURI}">
                 <a class="nav-link" href="/"
                    th:classappend="${#strings.equals(activeLink, '/')} ? 'active' : ''">Главная</a>
-                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/friend"
-                   th:classappend="${#strings.equals(activeLink, '/friend')} ? 'active' : ''">Добавить друзей</a>
                 <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users"
                    th:classappend="${#strings.equals(activeLink, '/users')} ? 'active' : ''">Пользователи</a>
+
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" href="/friend"
+                   th:classappend="${#strings.equals(activeLink, '/friend')} ? 'active' : ''">Найти друзей</a>
+
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" href="/friend/getMyFriends"
+                   th:classappend="${#strings.equals(activeLink, '/friend/getMyFriends')} ? 'active' : ''">Мои друзья</a>
+
                 <a class="nav-link" href="/logout">
                     Выход (<span th:text="${#authentication.name}"></span>)
                 </a>

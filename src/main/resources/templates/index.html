@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{default}">
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="card w-50" style="margin-top: 15px">
         <div class="card-block">
-            <h3 class="card-title">Profile Name</h3>
+            <h3 class="card-title" th:text="${#authentication.name}"></h3>
             <img class="page_avatar_img" src="https://content.foto.my.mail.ru/mail/4722074/_myphoto/i-2117.jpg"
                  height="100" width="100">
             <a class="btn btn-primary" style="background-color: #3177a8"
                th:href="@{/friend}">
                 <i class="fa-solid fa-plus"></i> Найти друзей
+            </a>
+            <a class="btn btn-primary" style="background-color: #3177a8"
+               th:href="@{/friend/getMyFriends}">
+                <i class="fa-solid fa-plus"></i> Мои друзья
             </a>
         </div>
     </div>

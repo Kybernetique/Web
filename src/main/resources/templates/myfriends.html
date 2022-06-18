@@ -32,12 +32,6 @@
             </table>
         </div>
     </div>-->
-    <div>
-        <a sec:authorize="hasRole('ROLE_USER')" class="btn btn-success button-fixed"
-           th:href="@{/friend/edit/}">
-            <i class="fa-solid fa-plus"></i> Добавить
-        </a>
-    </div>
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -51,30 +45,22 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="friend, iterator: ${friends}">
+            <tr th:each="myFriend, iterator: ${myFriends}">
                 <th scope="row" th:text="${iterator.index} + 1"></th>
-                <td th:text="${friend.id}"></td>
-                <td th:text="${friend.firstName}" style="width: 60%"></td>
-                <td th:text="${friend.lastName}" style="width: 60%"></td>
-                <td th:text="${friend.age}" style="width: 60%"></td>
+                <td th:text="${myFriend.id}"></td>
+                <td th:text="${myFriend.firstName}" style="width: 60%"></td>
+                <td th:text="${myFriend.lastName}" style="width: 60%"></td>
+                <td th:text="${myFriend.age}" style="width: 60%"></td>
                 <td style="width: 10%">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning button-fixed button-sm"
-                           th:href="@{/friend/edit/{id}(id=${friend.id})}">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Изменить
-                        </a>
                         <button sec:authorize="hasRole('ROLE_USER')" type="button" class="btn btn-danger button-fixed button-sm"
-                                th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${friend.id}').click()|">
+                                th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${myFriend.id}').click()|">
                             <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                         </button>
-<!--                        <form sec:authorize="hasRole('ROLE_USER')" th:action="@{/friend/{id}(id=${friend.id})}" method="post">
-                            <button th:id="'add-' + ${friend.id}" type="submit" style="display: none">
-                                Добавить в друзья
-                            </button>
-                        </form>-->
+
                     </div>
-                    <form th:action="@{/friend/delete/{id}(id=${friend.id})}" method="post">
-                        <button th:id="'remove-' + ${friend.id}" type="submit" style="display: none">
+                    <form th:action="@{/friend/delete/{id}(id=${myFriend.id})}" method="post">
+                        <button th:id="'remove-' + ${myFriend.id}" type="submit" style="display: none">
                             Удалить
                         </button>
                     </form>
